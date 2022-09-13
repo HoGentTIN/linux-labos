@@ -70,8 +70,8 @@ firewall-cmd --reload
 log "Securing the database"
 
 if is_mysql_root_password_empty; then
-mysql --user=root <<_EOF_
-  UPDATE mysql.user SET Password=PASSWORD('${db_root_password}') WHERE User='root';
+mysql <<_EOF_
+  SET PASSWORD FOR 'root'@'localhost' = PASSWORD('${db_root_password}');
   DELETE FROM mysql.user WHERE User='';
   DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');
   DROP DATABASE IF EXISTS test;

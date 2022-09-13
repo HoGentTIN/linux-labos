@@ -58,14 +58,14 @@ log '=== Starting common provisioning tasks ==='
 # TODO: insert common provisioning code here, e.g. install EPEL repository, add
 # users, enable SELinux, etc.
 
-log "Ensuring SELinux is active"PermissivePermissivePermissive
+log "Ensuring SELinux is active"
 
 if [ "$(getenforce)" != 'Enforcing' ]; then
     # Enable SELinux now
     setenforce 1
 
     # Change the config file
-    sed -i 's/SELINUX=permissive/SELINUX=enforcing/' /etc/selinux/config
+    sed -i 's/SELINUX=.*/SELINUX=enforcing/' /etc/selinux/config
 fi
 
 log "Installing useful packages"

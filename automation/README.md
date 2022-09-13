@@ -24,12 +24,12 @@ VM, run `vagrant status NAME`.
 
 Je kan later nog VMs toevoegen door het bestand [vagrant-hosts.yml](vagrant-hosts.yml) te bewerken.
 
-Start de VM met de naam "db" op zoals hieronder getoond. Merk op dat dit even kan duren. De eerste keer dat je dit doet wordt er een zgn. "base box" gedownload, een minimale installatie van AlmaLinux 8 die voor elke nieuwe VM zal hergebruikt worden.
+Start de VM met de naam "db" op zoals hieronder getoond. Merk op dat dit even kan duren. De eerste keer dat je dit doet wordt er een zgn. "base box" gedownload, een minimale installatie van AlmaLinux 9 die voor elke nieuwe VM zal hergebruikt worden.
 
 ```console
 > vagrant up db
 Bringing machine 'db' up with 'virtualbox' provider...
-==> db: Importing base box 'bento/almalinux-8'...
+==> db: Importing base box 'bento/almalinux-9'...
 ...
     db: [LOG]  Securing the database
     db: [LOG]  Creating database and user
@@ -76,6 +76,6 @@ Als je de "web"-VM opstart zal je merken dat deze VM nog grotendeels "leeg" is. 
 - Probeer regelmatig in de webbrowser van je Linux-Mint VM of de website daar kan getoond worden.
 - Als je denkt dat je klaar bent, doe je `vagrant destroy web` en `vagrant up web`. Je webserver zou in één keer moeten geïnstalleerd worden met alle nodige configuratiewijzigingen. Zonder verdere manuele handelingen moet je de website zien in de Linux-Mint VM.
 
-## License
+## Bron
 
-Deze opstelling is gebaseerd op [vagrant-shell-skeleton](https://github.com/bertvv/vagrant-shell-skeleton/). Licensed under the 2-clause "Simplified BSD License". See [LICENSE.md](/LICENSE.md) for details.
+Deze opstelling is gebaseerd op [vagrant-shell-skeleton](https://github.com/bertvv/vagrant-shell-skeleton/).

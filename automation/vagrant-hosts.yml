@@ -31,11 +31,11 @@
 ---
 
 - name: db
-  box: bento/almalinux-8
+  box: bento/almalinux-9
   ip: 192.168.76.3
   intnet: true
 
 - name: web
-  box: bento/almalinux-8
+  box: bento/almalinux-9
   ip: 192.168.76.4
   intnet: true
