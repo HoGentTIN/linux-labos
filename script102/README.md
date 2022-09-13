@@ -94,5 +94,36 @@
     $ ./sort-passwd.sh foo
     ./sort-passwd.sh: line 11: [: foo: integer expression expected
     Please enter a number between 1 and 7 (included)
-
     ```
+
+## Netwerkinstellingen opvragen
+
+Schrijf een script `ip-info.sh` dat essentiële informatie over de IP-configuratie van het systeem geeft, meer bepaald:
+
+- Voor elke interface (behalve de loopback) het IP-adres met bijhorend netwerkmasker in CIDR notatie
+    - Tip: gebruik de `-brief` optie van het `ip`-commando
+- De default gateway (en de netwerkinterface langs waar pakketten naar "buiten" gestuurd kunnen worden)
+    - Tip: gebruik `ip`
+- De DNS-server(s)
+    - Tip: gebruik `resolvectl`
+
+Wees creatief in de uitvoer: gebruik kleuren en/of emoji's om de informatie duidelijk te maken.
+
+Een voorbeeld. De exacte interfaces en IP-adressen kunnen voor jouw situatie afwijken:
+
+```console
+osboxes@osboxes:~$ ./ip-info.sh 
+📫 IP addresses 📫
+enp0s3           UP             10.0.2.15/24 fe80::bbb0:3744:a35d:cdbc/64 
+enp0s8           UP             fe80::17d1:a3a8:10f:f05/64 
+enp0s9           UP             192.168.56.101/24 fe80::f4a8:eb4b:e94d:8220/64 
+
+🌐 Default gateway 🌐
+10.0.2.2 dev enp0s3
+
+📗 DNS server(s) 📗
+Global:
+Link 4 (enp0s9):
+Link 3 (enp0s8):
+Link 2 (enp0s3): 10.0.2.3
+```
