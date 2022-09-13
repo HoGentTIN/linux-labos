@@ -1,0 +1,14 @@
+# vagrant-hosts.yml - List of hosts to be created by Vagrant.
+#
+# For more information about the possible settings, see the documentation at
+# <https://github.com/bertvv/ansible-skeleton>
+---
+
+- name: dbt
+  ip: 192.168.76.73
+  intnet: true
+
+- name: webt
+  ip: 192.168.56.72
+  netmask: 255.255.255.128
+  intnet: true
