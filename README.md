@@ -15,4 +15,13 @@ Hier vind je nog meer aanwijzingen ivm het gebruik van Git: [git-instructies.md]
 - Hst 7, 10. [automatisering](automation/README.md) - reproduceerbare virtuele omgeving voor het opzetten en configureren van Linux-VMs
 - [troubleshooting](troubleshooting/README.md) - demo-omgeving voor de les over troubleshooting
 
+## Labo-verslagen bijhouden
 
+Maak in je repository zelf nieuwe Markdown-bestanden aan om je oplossingen bij te houden.
+
+- Tip: gebruik "[fenced code blocks](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/creating-and-highlighting-code-blocks)" om codefragmenten op te maken met syntaxkleuren. Geef "language identifier" `bash` op voor (delen van) scripts en `console` voor interacties op de terminal.
+- VS Code heeft features en plugins die het bewerken van Markdown vereenvoudigen:
+    - `Ctrl+Shift+V`: "preview" van de opgemaakte tekst, zoals die er op Github zou uitzien.
+    - `Ctrl+Shift+I`: document formatteren (bv. tabellen mooi uitlijnen).
+    - Markdown All in One (You Zhang): plugin met uitgebreide ondersteuning voor Markdown.
+    - markdownlint (David Anson): plugin die zorgt voor een consistente "codeerstijl" in Markdown-documenten.
