@@ -11,3 +11,6 @@
 
 # VirtualBox appliances
 *.ova
+
+# NodeJS downloaded modules
+node_modules
