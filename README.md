@@ -4,7 +4,9 @@ Deze repository hoort bij de cursussen Linux ("OpsLinux") en Linux for Data Scie
 
 In deze cursussen zal je een Linux-VM moeten aanmaken om je vaardigheden in te oefenen. Om efficiënt te kunnen werken aan deze labo-taken, is het nuttig om deze Github-repository te klonen binnen deze Linux-VM (voor de scripting-opgaven). Let er op dat je wijzigingen altijd gesynchroniseerd houd met `git push` en `git pull --rebase`.
 
-Hier vind je nog meer aanwijzingen ivm het gebruik van Git: [git-instructies.md](git-instructies.md)
+Hier vind je nog meer aanwijzingen ivm het gebruik van Git: [git-instructies.md](git-instructies.md).
+
+⚠️⚠️⚠️ **LET OP!** Repositories van studenten(groepen) kunnen worden opgeruimd voor het begin van het volgende academiejaar. **Zorg dus tijdig voor een backup!**
 
 ## Labo-oefeningen
 
