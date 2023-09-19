@@ -66,8 +66,7 @@ Voor de volgende stappen werk je in jouw Linux (GUI) VM. Je kan deze herhalen op
     # Enkel op Windows belangrijk, vermijd problemen met regeleindes
     git config --global core.autocrlf input
     # Als je zelf repositories zou aanmaken (met `git init`)
-    git config --global init.defaultbranch=main
-
+    git config --global init.defaultbranch main
     ```
 
 4. Maak binnen de VM een directory die je voorbehoudt voor al wat met deze cursus te maken heeft. Kopieer de URL van je persoonlijke Github-repo via de groene knop rechtsboven met "Code". Kies "Use SSH" en kopieer de URL in het tekstvak eronder. In de terminal ga je naar de directory waarbinnen je al je materiaal in verband met deze cursus wil bijhouden en voert volgend commando uit:
@@ -109,7 +108,32 @@ Op Github is het standaard-bestandsformaat voor opgemaakte tekst Markdown. Het i
 
 **Wij raden heel sterk aan om te leren nota's te nemen in Markdown.** Markdown wordt meer en meer gebruikt en komt ook nog in latere cursussen van pas. Jupyter Notebooks, bijvoorbeeld, (gebruikt in o.a. Data Science & AI en andere vakken uit de Data Engineering-leerlijn) zijn documenten die deels bestaan uit Python-code en Markdown. Er zijn tegenwoordig ook tientallen tools om Markdown om te zetten in een veelvoud van formaten: presentaties, websites, PDFs, enz. Markdown is echt niet moeilijk en het is een nuttige vaardigheid.
 
-## TODO: Regeleindes van tekstbestanden
+## Regeleindes van tekstbestanden
+
+Een belangrijk verschil tussen Windows enerzijds en Linux/macOS anderzijds is de manier waarop regeleindes in tekstbestanden worden voorgesteld.
+
+Op een Linux-systeem bestaat een regeleinde uit 1 byte: `\n`, of ASCII-symbool 10 (Line Feed/LF). Op een Windows-systeem, echter worden 2 bytes gebruikt: `\r\n`, of ASCII-karakters 13 en 10 (Carriage Return/CR + Line Feed/LF).
+
+De namen "Carriage Return" en "Line Feed" komen van vroegere printers die enkel tekst konden afdrukken. "Line Feed" was het commando om het papier één regel op te schuiven en "Carriage Return" om de printkop terug naar het begin van de regel te bewegen.
+
+Het is belangrijk op op te letten dat bestanden altijd de correcte regeleindes hebben. In het bijzonder **moeten** Shell-scripts **altijd** Linux-regeleindes hebben, zoniet zal het script niet uitvoeren:
+
+```console
+$ ./hello.sh
+-bash: ./hello.sh: /bin/bash^M: bad interpreter: No such file or directory
+```
+
+De `^M` is een aanduiding voor dat CR-karakter.
+
+In deze repository zit een vorm van bescherming via het bestand [.gitattributes](.gitattributes). Die bepaalt o.a. dat bestanden met extensie `.sh` die gecommit worden altijd Linux-regeleindes krijgen. Als je je script echter schrijft vanop een Windows-systeem, kan het toch zijn dat het bestand Windows-regeleindes krijgt.
+
+In VS Code kan je dit rechtsonder in de statusbalk controleren. 
+
+![Regeleindes controleren](crlf.png)
+
+Staat er LF? Dan is alles ok! Staat er CRLF? Dan klik je er op en kan je het juiste soort regeleindes kiezen.
+
+In Git Bash en op Linux-systemen bestaat er ook een commando `dos2unix` waarmee je tekstbestanden kan omzetten.
 
 ## Studiemateriaal en referenties
 
