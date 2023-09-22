@@ -1,5 +1,29 @@
 # Hst 2. script101 - Intro scripting
 
+## I/O Redirection en filters
+
+1. Op een Linux-systeem van de Debian-familie kan je een lijst van geïnstalleerde software opvragen met het commando `apt list --installed`. Doe dit op jouw Linux-Mint VM. Het commando genereert heel wat output, zo veel dat je misschien zelfs niet de volledige lijst kan zien in de terminal. Zorg er voor dat je telkens een pagina te zien krijgt en dat je op spatie kan drukken voor de volgende pagina.
+
+2. Als we verschillende dingen willen doen met de lijst van geïnstalleerde software, dan moeten we het commando telkens opnieuw uitvoeren. Dat is tijdrovend. Schrijf in plaats daarvan het resultaat van het commando weg in een bestand `packages.txt`.
+
+3. Bij het wegschrijven naar een bestand krijg je toch nog een waarschuwing te zien. Zorg er voor dat deze niet getoond wordt.
+
+4. Toon de eerste tien lijnen van `packages.txt` (met het geschikte commando!). De eerste lijn bevat nog geen naam van een package en hoort er dus eigenlijk niet bij. Gebruik een geschikt commando om er voor te zorgen dat die eerste lijn uit de uitvoer van `apt list` *niet* mee weggeschreven wordt naar `packages.txt`. Controleer het resultaat!
+
+5. Gebruik een geschikt commando om te tellen hoeveel packages er momenteel geïnstalleerd zijn. Tip: elke lijn van `packages.txt` bevat de naam van een package.
+
+6. Op elke lijn staat naast de naam van de package en de versie ook de processorarchitectuur vermeld (bv. amd64). Toon een gesorteerde lijst van alle architecturen die voorkomen in het bestand (geen dubbels afdrukken!) en ook hoe vaak elk voorkomt.
+
+7. Zoek in `packages.txt` naar alle packages met `python` in de naam. Hoeveel zijn dit er?
+
+8. Het commando `apt list --all-versions` toont zowel packages die geïnstalleerd zijn als beschikbare packages. Gebruik het om alle packages met `python` in de naam op te lijsten. **Let op:** het is hier niet nodig om een apart commando te gebruiken om te zoeken op naam. Je kan dit al opgeven met het commando `apt-list` zelf.
+
+9. Het is vervelend dat in de uitvoer van dit commando lege lijnen zitten. Zo kunnen we het aantal niet makkelijk tellen. Laat ons deze lege regels wegfilteren aan de hand van een geschikt commando. (Tip: in een lege lijn wordt het begin van de regel onmiddellijk gevolgd door het einde van een regel). Schrijf het resultaat weg naar `python-packages.txt`. Zorg ook dat de waarschuwing niet getoond wordt en dat die eerste lijn (`Listing...`) niet mee weggeschreven wordt.
+
+10. Hoeveel packages zijn er opgesomd in `python-packages.txt`? Hoeveel daarvan hebben de vermelding "installed"?
+
+11. Als je goed kijkt in `python-packages.txt` zal je zien dat sommige packages 2x vermeld worden (bv. `hexchat-python`) en dus dubbel geteld worden. Haal enkel de package-namen uit het bestand (zonder versienummer, enz.) en laat alle dubbels vallen. Hoeveel packages hou je dan nog over?
+
 ## Variabelen
 
 Zoek de inhoud op van volgende shellvariabelen en vul volgende tabel aan. Wat betekent elke variabele?
@@ -36,30 +60,6 @@ Zoek de inhoud op van volgende shellvariabelen en vul volgende tabel aan. Wat be
 6. Verwijder de variabele `${person}` met `unset`. Verifieer dat deze niet meer bestaat door de waarde op te vragen. Combineer nu eens het definiëren van deze variabele en het uitvoeren van het script in één regel, met een spatie tussen beide. De opdrachtregel heeft de vorm van: `variabele=waarde ./script.sh`.
 
     Werkt het script? Kan je de variabele nog opvragen nadat het script afgelopen is?
-
-## I/O Redirection en filters
-
-1. Op een Linux-systeem van de Debian-familie kan je een lijst van geïnstalleerde software opvragen met het commando `apt list --installed`. Doe dit op jouw Linux-Mint VM. Het commando genereert heel wat output, zo veel dat je misschien zelfs niet de volledige lijst kan zien in de terminal. Zorg er voor dat je telkens een pagina te zien krijgt en dat je op spatie kan drukken voor de volgende pagina.
-
-2. Als we verschillende dingen willen doen met de lijst van geïnstalleerde software, dan moeten we het commando telkens opnieuw uitvoeren. Dat is tijdrovend. Schrijf in plaats daarvan het resultaat van het commando weg in een bestand `packages.txt`.
-
-3. Bij het wegschrijven naar een bestand krijg je toch nog een waarschuwing te zien. Zorg er voor dat deze niet getoond wordt.
-
-4. Toon de eerste tien lijnen van `packages.txt` (met het geschikte commando!). De eerste lijn bevat nog geen naam van een package en hoort er dus eigenlijk niet bij. Gebruik een geschikt commando om er voor te zorgen dat die eerste lijn uit de uitvoer van `apt list` *niet* mee weggeschreven wordt naar `packages.txt`. Controleer het resultaat!
-
-5. Gebruik een geschikt commando om te tellen hoeveel packages er momenteel geïnstalleerd zijn. Tip: elke lijn van `packages.txt` bevat de naam van een package.
-
-6. Op elke lijn staat naast de naam van de package en de versie ook de processorarchitectuur vermeld (bv. amd64). Toon een gesorteerde lijst van alle architecturen die voorkomen in het bestand (geen dubbels afdrukken!) en ook hoe vaak elk voorkomt.
-
-7. Zoek in `packages.txt` naar alle packages met `python` in de naam. Hoeveel zijn dit er?
-
-8. Het commando `apt list --all-versions` toont zowel packages die geïnstalleerd zijn als beschikbare packages. Gebruik het om alle packages met `python` in de naam op te lijsten. **Let op:** het is hier niet nodig om een apart commando te gebruiken om te zoeken op naam. Je kan dit al opgeven met het commando `apt-list` zelf.
-
-9. Het is vervelend dat in de uitvoer van dit commando lege lijnen zitten. Zo kunnen we het aantal niet makkelijk tellen. Laat ons deze lege regels wegfilteren aan de hand van een geschikt commando. (Tip: in een lege lijn wordt het begin van de regel onmiddellijk gevolgd door het einde van een regel). Schrijf het resultaat weg naar `python-packages.txt`. Zorg ook dat de waarschuwing niet getoond wordt en dat die eerste lijn (`Listing...`) niet mee weggeschreven wordt.
-
-10. Hoeveel packages zijn er opgesomd in `python-packages.txt`? Hoeveel daarvan hebben de vermelding "installed"?
-
-11. Als je goed kijkt in `python-packages.txt` zal je zien dat sommige packages 2x vermeld worden (bv. `hexchat-python`) en dus dubbel geteld worden. Haal enkel de package-namen uit het bestand (zonder versienummer, enz.) en laat alle dubbels vallen. Hoeveel packages hou je dan nog over?
 
 ## Filters in scripts
 
