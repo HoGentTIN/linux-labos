@@ -14,7 +14,7 @@ require 'yaml'
 ENV["LC_ALL"] = "en_US.UTF-8"
 
 # Set your default base box here
-DEFAULT_BASE_BOX = 'bento/centos-9'
+DEFAULT_BASE_BOX = 'bento/almalinux-9'
 
 #
 # No changes needed below this point
@@ -89,7 +89,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       node.vm.box_url = host['box_url'] if host.key? 'box_url'
 
       node.vm.hostname = host['name']
-      node.vm.network :private_network, network_options(host)
+      node.vm.network :private_network, **network_options(host)
       custom_synced_folders(node.vm, host)
       forwarded_ports(node.vm, host)
 
