@@ -14,33 +14,18 @@ After completing this assignment, you should have basic understanding on how to 
 
 ## 8.4.2.1 Set up the lab environment
 
-Go to the `dockerlab` directory and start the Vagrant environment:
+Ensure you have a working copy of the Github repository in your Linux Mint VM. Go to the `dockerlab/` directory and run the script that will install Docker:
 
 ```console
 $ cd dockerlab
-$ vagrant status
-Current machine states:
-
-dockerlab                 not created (virtualbox)
-
-The environment has not yet been created. Run `vagrant up` to
-create the environment. If a machine is not created, only the
-default provider will be shown. So if a provider is not listed,
-then the machine is not created for that environment.
-$ vagrant up
-Bringing machine 'dockerlab' up with 'virtualbox' provider...
-
-[...]
-
-PLAY RECAP *********************************************************************
-dockerlab                  : ok=23   changed=9    unreachable=0    failed=0    skipped=19   rescued=0    ignored=0   
+$ sudo ./install-docker.sh
 ```
+
+Ensure that you are a member of the `docker` group (with the `groups` command). If not, log out and log in again.
 
 ### Portainer
 
-We already pre-installed and spun up a container with [Portainer](https://www.portainer.io/), a web-ui for managing containers. Strictly speaking, Portainer is not necessary for completing the lab assignment, but it can help novice Docker users to explore the environment: container state, images, networks, etc. Portainer provides similar features as [Docker Desktop](https://docs.docker.com/desktop/). Docker Desktop, however, can only be run on Windows or Mac.
-
-If the `vagrant up` command finished successfully, you can access the web UI by opening a web browser and entering URL <http://192.168.56.20:9000/>. The `dockerlab` VM can be reached from the physical system with IP address 192.168.56.20 (check this by pinging the VM!). Portainer, by default, listens on port 9000.
+We already pre-installed and spun up a container with [Portainer](https://www.portainer.io/), a web-ui for managing containers. Strictly speaking, Portainer is not necessary for completing the lab assignment, but it can help novice Docker users to explore the environment: container state, images, networks, etc. If the installation script finished successfully, you can access the web UI by opening a web browser and entering URL <http://localhost:9000/>.
 
 Remark that what you actually see when opening the Portainer UI may differ from the screenshots below, when you have a newer version of Portainer installed.
 
@@ -64,50 +49,14 @@ From there you access the Portainer dashboard. Explore the menu on the left and 
 
 We explored what's running on the Docker instance through Portainer, but it's important that you can manage Docker from the command line as well. The next part of this lab assignment explores the Docker command line interface. Don't hesitate to use the Portainer UI alongside to see what's happening.
 
-In this VM, based on Ubuntu 20.04 LTS, Docker was already preinstalled and started. If you would want to install Docker on a system manually, check out the [Docker documentation](https://docs.docker.com/engine/install/). Remark that on a standard installation, you need to be root in order to execute Docker commands that change the state of the system. However, in this VM, the default user `vagrant` has been made a member of user group `docker`. As a consequence, it is not necessary to put `sudo` in front of docker commands.
-
-First of all, log in to the dockerlab VM. Open a terminal on your physical system (e.g. Bash on Linux, zsh on MacOS or Git Bash on Windows) and go to the `dockerlab` directory.
-
-```console
-$ vagrant ssh dockerlab
-Welcome to Ubuntu 20.04.2 LTS (GNU/Linux 5.4.0-73-generic x86_64)
-
- * Documentation:  https://help.ubuntu.com
- * Management:     https://landscape.canonical.com
- * Support:        https://ubuntu.com/advantage
-
-  System information as of Fri 25 Jun 2021 10:34:39 AM UTC
-
-  System load:                      0.0
-  Usage of /:                       4.0% of 61.31GB
-  Memory usage:                     7%
-  Swap usage:                       0%
-  Processes:                        118
-  Users logged in:                  0
-  IPv4 address for br-6c56e6ec2cf2: 172.30.0.1
-  IPv4 address for docker0:         172.17.0.1
-  IPv4 address for eth0:            10.0.2.15
-  IPv4 address for eth1:            192.168.56.20
-
-
-This system is built by the Bento project by Chef Software
-More information can be found at https://github.com/chef/bento
-Last login: Fri Jun 25 08:33:47 2021 from 10.0.2.2
-vagrant@dockerlab:~$ 
-```
-
-Try out the following commands to check if your Docker instance is running correctly and record the results in your lab report.
+Open a terminal and try out the following commands to check if your Docker instance is running correctly and record the results in your lab report.
 
 - Check the status of the Docker engine: `systemctl status docker`
 - Check network TCP server ports that are in use on the system: `sudo ss -tlnp`
 - List running Docker containers with `docker ps`
 - List Docker images with `docker images`
 
-The directory `/vagrant/labs` contains files that you will need for some of the lab assignments below. Actually, it's a directory on your physical system that is mounted inside the VM. Please copy this directory to your user home to avoid some possible problems with the mounted file system:
-
-```console
-$ cp -r /vagrant/labs ~
-```
+The directory `dockerlab/labs/` contains files that you will need for some of the lab assignments below.
 
 ## 8.4.2.2 Our first containers
 
@@ -132,9 +81,9 @@ Launch an Alpine container **interactively** (`-i`) and open a shell (`-t`):
 docker run -i -t --name alpine alpine
 ```
 
-You will drop into a root shell inside the container. You can explore the contents. Which commands are available? Compare with the number of commands on the Ubuntu VM.
+You will drop into a root shell inside the container. You can explore the contents. Which commands are available? Compare with the number of commands on the Linux Mint VM.
 
-Open another terminal on your host system and log into the `dockerlab` VM. Execute the following commands and peruse the output. What do these commands do, exactly?
+Open another terminal and execute the following commands and peruse the output. What do these commands do, exactly?
 
 ```console
 docker container ls
@@ -167,7 +116,7 @@ docker exec -i -t alpine /bin/sh
 ```
 
 - Compare the host name with the container ID
-- What's the IP address of the container? Try to ping it from inside the `dockerlab` VM.
+- What's the IP address of the container? Try to ping it from the host system (i.e. the Linux Mint VM).
 - After you exit the shell, is the container still running? Check with `docker ps` and `docker ps -a`
 - Stop and remove the container when you're ready, we won't need it anymore.
 
@@ -184,7 +133,7 @@ The `docker run` command started a container named `helloapp` and exposed port 8
 
 Services that run inside containers can be made available to the outside world through port forwarding. Network traffic that arrives on the host system on that port, will be forwarded to port 80 of the container. Consequently, multiple containers may have port 80 exposed, but this will not result in a conflict on the host system, since they will be forwarded through a different port number.
 
-What's the forwarded port for the `helloapp` container? There's several ways to determine this, a.o. `docker ps` and `docker port ID` (with ID the container ID of the `helloapp` container). Check if this works with `curl http://localhost:PORT/` (with PORT the forwarded port) and by opening a browser window on your physical system and go to URL <http://192.168.56.20:PORT>. Record the results, and take a screenshot of the web page. You should get something like this:
+What's the forwarded port for the `helloapp` container? There's several ways to determine this, a.o. `docker ps` and `docker port ID` (with ID the container ID of the `helloapp` container). Check if this works with `curl http://localhost:PORT/` (with PORT the forwarded port). Record the results, and take a screenshot of the web page. You should get something like this:
 
 ![The website served by the helloapp container](img/1-helloapp.png).
 
@@ -267,18 +216,16 @@ mysql> show tables;
 mysql> SELECT * FROM Catalog;
 ```
 
-If you have installed MySQL Workbench on your physical system, you can use it to access the database in the container! Connect to host 192.168.56.20, with the credentials specified with the `-e` options when you started the container.
-
-The mysql command line client should also work, either from within the VM, or even from the physical system:
+The mysql command line client should also work when started from the host system (i.e. your Linux Mint VM). The port forwarding rule ensures that network traffic on port 3306 of the host system is forwarded to port 3306 of the container.
 
 ```console
-mysql -h 192.168.56.20 -P 3306 -uroot -pletmein appdb
+$ mysql -h 127.0.0.1 -P 3306 -uroot -pletmein appdb
 ```
 
 Or you can execute an SQL query on the database:
 
 ```console
-$ mysql -h 192.168.56.20 -P 3306 -uappusr -pletmein appdb <<< "SELECT * FROM Catalog;"
+$ mysql -h 127.0.0.1 -P 3306 -uappusr -pletmein appdb <<< "SELECT * FROM Catalog;"
 mysql: [Warning] Using a password on the command line interface can be insecure.
 CatalogId       Journal Publisher       Edition Title   Author
 1       Oracle Magazine Oracle Publishing       November December 2013  Engineering as a Service        David A. Kelly
@@ -311,10 +258,10 @@ We now have successfully created a volume that can be used to store persistent d
 
 In many situations, e.g. when you want to deploy a webapplication in a container, you'll need to customize an existing Docker image, or create one from scratch. In this part of the lab, we'll explore the possibilities.
 
-First, go to the directory `~/labs/static-website` (which you copied from `/vagrant` previously) and look at the contents
+First, go to the directory `dockerlab/labs/static-website` (which you copied from `/vagrant` previously) and look at the contents
 
 ```console
-$ cd ~/labs/static-website
+$ cd dockerlab/labs/static-website
 $ tree
 .
 ├── Dockerfile
@@ -375,7 +322,7 @@ Now, start a container based on this image, forward port 8080 on the host system
 docker run -d -p 8080:80 --name nginx local:static-site
 ```
 
-Now check if the website is available. Inside the VM, you should be able to fetch the index page with `curl http://localhost:8080/`. On your physical system, open a webbrowser and point it to `http://192.168.56.20:8080/` and verify that the web page is visible. It should contain a simple message ("Hello world/It works!").
+Now check if the website is available. You should be able to fetch the index page with `curl http://localhost:8080/` or by opening a webbrowser, pointing it to `http://127.0.0.1:8080/` and verifying that the web page is visible. It should contain a simple message ("Hello world/It works!").
 
 ### Discussion
 
@@ -423,9 +370,9 @@ Docker Compose is a tool that was developed to help define and share multi-conta
 
 In this part of the assignment, you will use a compose file to set up a reproducible multi-container application stack.
 
-In the dockerlab VM, go to `/vagrant/labs/todo-app`. This directory contains a Node.js demo application, a todo-list, that is also used in the [Docker Get Started guide](https://docs.docker.com/get-started/). The directory also contains a Dockerfile. Use it to build an image for the application container, named `todo-app` and start it (by now, you should know how!). The application uses port 3000. Use port forwarding so you can access the application from the physical system. Check that the application is running by opening a browser window and entering the application's URL:
+Go to `dockerlab/labs/todo-app`. This directory contains a Node.js demo application, a todo-list, that is also used in the [Docker Get Started guide](https://docs.docker.com/get-started/). The directory also contains a Dockerfile. Use it to build an image for the application container, named `todo-app` and start it (by now, you should know how!). The application uses port 3000. Use port forwarding so you can access the application from the physical system. Check that the application is running by opening a browser window and entering the application's URL:
 
-![Demo todo application running in a container at URL https://192.168.56.20:3000/](img/1-todo-app.png)
+![Demo todo application running in a container](img/1-todo-app.png)
 
 Also check the container and image in Portainer!
 
