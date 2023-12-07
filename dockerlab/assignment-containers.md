@@ -383,14 +383,16 @@ Open the `docker-compose.yml` file in the directory `labs/todo-app` and carefull
 Stop the currently running instance of the application container and then run the command:
 
 ```console
-docker-compose up -d
+docker compose up -d
 ```
 
-The `-d` option will run docker-compose in the background so you can immediately use the terminal. If the application doesn't run after the first try, you can retry without the `-d` option. Error messages will be shown on the terminal. If you need a terminal for entering commands, log into the VM from another console.
+The `-d` option will run Docker Compose in the background so you can immediately use the terminal. If the application doesn't run after the first try, you can retry without the `-d` option. Error messages will be shown on the terminal. If you need a terminal for entering commands, log into the VM from another console.
+
+Remark that this is the command in "Docker Compose V2" syntax. The previous version of Docker Compose used the command `docker-compose` instead of `docker compose`.
 
 Use portainer or the command line to inspect the containers. What are the names and IP addresses of the two containers?
 
-Remark that we don't need to know the IP address in order to communicate between containers in the same stack. The container names, as specified in the docker-compose file are configured as hostname aliases and will resolve to an IP-address inside the container. Verify this by opening a console (`/bin/sh`) inside the app container and try the following commands:
+Remark that we don't need to know the IP address in order to communicate between containers in the same stack. The container names, as specified in the Docker Compose file are configured as hostname aliases and will resolve to an IP-address inside the container. Verify this by opening a console (`/bin/sh`) inside the app container and try the following commands:
 
 ```console
 ping mysql
@@ -399,6 +401,6 @@ getent ahosts mysql
 
 Note that the `getent ahosts` command can be used to test DNS name resolution on systems where the `dig` or `nslookup` commands are not available.
 
-Enter some todo items in the application. Stop the application containers and remove them with `docker-compose down`. Check that the containers are effectively gone (CLI or Portainer).
+Enter some todo items in the application. Stop the application containers and remove them with `docker compose down`. Check that the containers are effectively gone (CLI or Portainer).
 
 When you bring the application back up, the todo items should have been preserved. Check whether this is indeed the case.

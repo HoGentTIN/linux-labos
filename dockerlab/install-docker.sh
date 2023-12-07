@@ -54,7 +54,7 @@ fi
 if [ ! -x /usr/bin/docker ]; then
     log "Installing Docker..."
     apt-get update
-    apt-get install -y docker.io docker-compose
+    apt-get install -y docker.io docker-compose-v2
 else
     log "Docker already installed"
 fi
