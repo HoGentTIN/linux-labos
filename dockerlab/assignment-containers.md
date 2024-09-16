@@ -370,7 +370,22 @@ Docker Compose is a tool that was developed to help define and share multi-conta
 
 In this part of the assignment, you will use a compose file to set up a reproducible multi-container application stack.
 
-Go to `dockerlab/labs/todo-app`. This directory contains a Node.js demo application, a todo-list, that is also used in the [Docker Get Started guide](https://docs.docker.com/get-started/). The directory also contains a Dockerfile. Use it to build an image for the application container, named `todo-app` and start it (by now, you should know how!). The application uses port 3000. Use port forwarding so you can access the application from the physical system. Check that the application is running by opening a browser window and entering the application's URL:
+Download the [docker/getting-started-app](https://github.com/docker/getting-started-app) repository as a ZIP file from Github and extract it to the `dockerlab/labs/` directory. This repository contains a Node.js demo application, a todo-list, that is also used in the [Docker Get Started guide (Part 7. Use Docker compose)](https://docs.docker.com/get-started/workshop/08_using_compose/).
+
+Create a Dockerfile with contents:
+
+```Dockerfile
+# syntax=docker/dockerfile:1
+
+FROM node:18-alpine
+WORKDIR /app
+COPY . .
+RUN yarn install --production
+CMD ["node", "src/index.js"]
+EXPOSE 3000
+```
+
+Use it to build an image for the application container, named `todo-app` and start it (by now, you should know how!). The application uses port 3000. Use port forwarding so you can access the application from the physical system. Check that the application is running by opening a browser window and entering the application's URL:
 
 ![Demo todo application running in a container](img/1-todo-app.png)
 
@@ -378,7 +393,7 @@ Also check the container and image in Portainer!
 
 The application is built so it can run without a database backend. Check the container's log to see how it saves data! However, when you point it to a MySQL database server, it will use that. Our goal is to set up an application stack with two containers, one for the app and the other for the database. The data stored in the database should of course be persistent.
 
-Open the `docker-compose.yml` file in the directory `labs/todo-app` and carefully examine the contents and comments. This file defines two containers, `app` and `mysql`. It also contains the instructions to build the image, that you can also find in the `Dockerfile`. Finally, a volume is defined that will be used to make the database contents persistent.
+Create a `docker-compose.yml` file in the directory `labs/getting-started-app` and add code as specified in the [Use Docker Compose tutorial](https://docs.docker.com/get-started/workshop/08_using_compose/). When finished, this file will define two containers, `app` and `mysql`. It also contains the instructions to build the image, that you can also find in the `Dockerfile`. Finally, a volume is defined that will be used to make the database contents persistent.
 
 Stop the currently running instance of the application container and then run the command:
 
