@@ -141,4 +141,4 @@ In Git Bash en op Linux-systemen bestaat er ook een commando `dos2unix` waarmee 
 - Github (n.d.). *Adding a new SSH key to your GitHub account*. <https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account>
 - Gruber, John (2004). *Markdown*. <http://daringfireball.net/projects/markdown/>
 - Van Vreckem, Bert (2014). *Workshop Inleiding Git*, <https://bertvv.github.io/git-workshop-nl/>
-- Van Vreckem, Bert (n.d.). *Cheat Sheets*, <https://github.com/bertvv/cheat-sheets> 
+- Van Vreckem, Bert (n.d.). *Cheat Sheets*, <https://github.com/bertvv/cheat-sheets>
