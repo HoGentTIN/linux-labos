@@ -16,7 +16,7 @@ Hier vind je nog meer aanwijzingen ivm het gebruik van Git: [git-instructies.md]
 
 - [script101](script101/README.md) - intro scripting
 - [script102](script102/README.md) - basis scripting
-- [script103](script103/README.md) - systeembeheertaken automatiseren
+- [script103](script103/README.md) - logische tests
 - [script201](script201/README.md) - geavanceerde scripting
 
 ### Enkel voor OpsLinux
