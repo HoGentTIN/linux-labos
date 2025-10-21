@@ -43,7 +43,7 @@
     Param 3:     drie
     Param 10:    tien
     num params:  8
-    Remaining:   twee vier vijf zes zeven acht negen elf
+    Remaining:   vier vijf zes zeven acht negen tien elf
     ```
 
 2. Schrijf een script `all-params.sh` dat elke positionele parameter op een aparte lijn afdrukt. Gebruik hiervoor een for-lus. Als de gebruiker geen argumenten opgegeven heeft, drukt het script een foutboodschap af (zie voorbeeld hieronder) en sluit het script af met foutcode (exit-status verschillend van 0).
