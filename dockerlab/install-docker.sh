@@ -5,6 +5,8 @@
 # ---------- Variables --------------------------------------------------------
 
 readonly debug='on'  # Set to 'on' to enable debug output
+readonly user=hogent # This user will be added to the docker group so they can
+                     # use Docker without sudo
 
 # ---------- Helper functions -------------------------------------------------
 
@@ -38,12 +40,6 @@ if [ "${EUID}" -ne '0' ]; then
    exit 1
 fi
 
-# Check if we're running on Linux Mint.
-if [ ! -f /etc/lsb-release ]; then
-    error "This script is only supported on (recent) Debian-based distros."
-    exit 1
-fi
-
 # Check if we're on a systemd-based system
 if [ ! -d /run/systemd ]; then
     error "This script is only supported on systemd-based systems."
@@ -54,7 +50,7 @@ fi
 if [ ! -x /usr/bin/docker ]; then
     log "Installing Docker..."
     apt-get update
-    apt-get install -y docker.io docker-compose-v2
+    apt-get install -y docker.io docker-compose
 else
     log "Docker already installed"
 fi
@@ -62,9 +58,6 @@ fi
 # Enable and start Docker
 log "Enabling and starting Docker..."
 systemctl enable --now docker.service
-
-# Determine the first non-root user on this system
-readonly user=$(awk -F: '$3 >= 1000 && $1 != "nobody" {print $1}' /etc/passwd | head -n 1)
 
 # Add that user to the docker group
 if groups "${user}" | grep -q docker; then
