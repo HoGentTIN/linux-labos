@@ -1,6 +1,6 @@
 # Labo Organising Users
 
-## Gebruikes en groepen aanmaken
+## Gebruikers en groepen aanmaken
 
 Het doel van deze opgave is om de opdrachten en de begrippen met betrekking tot gebruikers en groepen te bestuderen, binnen de context van Linux als een multi-user-systeem.
 
@@ -47,7 +47,7 @@ Maak nu de gebruikers in onderstaande tabel aan. Zorg er voor dat ze al meteen b
 
 2. Verwijder nu de groep `alice` en controleer.
 
-3. Gebruiker `daniel` gaat een tijdje niet meer sporten. Zorg er voor dat deze gebruiker tot nader order geen toegang meer kan hebben tot het systeem (zonder het wachtwoord of de gebruiker te verwijderen!).
+3. Gebruiker `daniel` gaat een tijdje niet meer sporten. Zorg er voor dat deze gebruiker tot nader order geen toegang meer kan hebben tot het systeem (zonder het wachtwoord of de gebruiker te verwijderen!). Er zijn meerdere manieren om dit te bereike. Geef er minstens 3 en probeer ze allemaal uit!
 
 4. Hoe kan je controleren dat `daniel` inderdaad geen toegang meer heeft tot het systeem? In welk bestand kan dat en hoe zie je daar dan dat het account afgesloten is?
 
@@ -78,7 +78,7 @@ Maak nu de gebruikers in onderstaande tabel aan. Zorg er voor dat ze al meteen b
 
 5. Log in als de root-gebruiker met het commando `su -` (let op de spatie!)
 
-6. Log uit, en log opnieuw in met `sudo su -`. Wat wordt er anders?
+6. Log uit, en log opnieuw in met `sudo su -`. Wat wordt er anders? Welk wachtwoord moet je gebruiken bij elke methode om in te loggen als root?
 
 ### Jezelf toevoegen en admin maken
 
@@ -91,3 +91,35 @@ Maak nu de gebruikers in onderstaande tabel aan. Zorg er voor dat ze al meteen b
     Tip: <https://www.debian.org/doc/manuals/debian-handbook/sect.config-misc.en.html#sect.sharing-admin-rights>
 
 4. Wanneer je jezelf toevoegt aan deze groep, zal je wellicht nog niet meteen adminrechten hebben. Je kan dit oplossen door uit te loggen en opnieuw in te loggen, maar er is ook een commando dat je kan gebruiken om dit meteen te laten gelden. Welk commando is dat?
+
+## Eigenaars en groepseigenaars aanpassen
+
+1. Je maakte hierboven reeds 2 groepen aan met de namen `zwemmen` en `judo`. Maak als `root` onder `/srv/` twee directories aan met de naam `groep/zwemmen/` en `groep/judo/`. Zorg dat de groepen eigenaar zijn van de overeenkomstige directories en dat `carol` eigenaar is van directory `zwemmen/` en `bob` van directory `judo/`. Geef de gebruikte commando’s en controleer:
+
+    ```console
+    $ # ls -l groep/
+    total 8
+    drwxr-xr-x 2 bob   judo    4096 Sep 24 21:32 judo
+    drwxr-xr-x 2 carol zwemmen 4096 Sep 24 21:32 zwemmen
+    ```
+
+2. Zorg ervoor dat gebruikers en groepen uit de vorige stap alle permissies hebben. Geef het geschikte commando en controleer.
+
+3. Voeg een andere gebruiker, vb. `daniel`, toe aan zowel de groep `zwemmen` als `judo` en controleer. Geen van beide groepen zijn primair.
+
+4. Log in als `daniel` en ga naar de directory `zwemmen/`. Laat de gebruiker hier een leeg bestand, `bestand1`, aanmaken in de directory `zwemmen/`. (Indien je hier problemen ondervindt, log dan in via een andere terminalvenster).
+
+5. Wie is nu eigenaar van `bestand1` en wie de `groepseigenaar`?
+
+6. Zorg er nu voor dat de groepseigenaar van de directory `zwemmen/` automatisch de groepseigenaar wordt van alle bestanden en directories die onder `zwemmen/` gemaakt worden. Doe hetzelfde voor de directory `judo/`.
+Geef de gebruikte commando’s.
+
+7. Log opnieuw in als `daniel` en laat deze gebruiker een leeg `bestand2` aanmaken in de directory `zwemmen/`. Geef de gebruikte commando’s.
+
+8. Wie is nu eigenaar van `bestand2` en wie `groepseigenaar`?
+
+9. Laat nu gebruiker `carol` een leeg bestand `bestand3` aanmaken. Controleer de eigenaar van `bestand3` en de groepseigenaar.
+
+10. Laat nu gebruiker `daniel` `bestand3` verwijderen. Lukt dit?
+
+11. Zorg er nu voor dat de gebruikers elkaars bestanden niet kunnen verwijderen. Als de gebruiker echter eigenaar is van het betreffende bestand mag dit wel. Leg uit hoe je dit doet en controleer!
