@@ -1,4 +1,4 @@
-# Hst 7. script201 - Advanced scripting
+# Labo Scripting 201
 
 ## 1. Genereer een wachtwoordzin
 
@@ -68,202 +68,44 @@ Schrijf een script om een backup te maken van de gegeven directory, meer bepaald
 
 Ook hier kan je starten met het sjabloon dat op een gelijkaardige manier gestructureerd is als dat voor de vorige oefening.
 
-## 3. Verbind met HOGENT VPN
+## 3. Analyseer Github repo
 
-Vanuit Linux een verbinding maken met de VPN-service van HOGENT (gebaseerd op Fortinet) is jammer genoeg niet zo eenvoudig. Er bestaat een Linux client van Fortinet zelf, maar sinds een recente versie lijkt die "onze" VPN-service niet meer te ondersteunen. Zowel GNOME of KDE ondersteunen VPN-verbindingen met allerlei vendors (Cisco, Fortinet, enz), maar daar heb je dan het probleem dat de authenticatie met Single Sign-On/SAML, zoals die voor alle diensten van HOGENT gebruikelijk is, niet ondersteund wordt. Gelukkig bestaat er een consoleapplicatie, [openfortivpn](https://github.com/adrienverge/openfortivpn/) die dat wél kan.
+Schrijf een script `analyse-github-repo.sh` waaraan je één argument meegeeft dat de naam van een directory moet zijn waarin zich een Github-repository zou moeten bevinden. Het script analyseert de repository en geeft waar nodig enkele aanbevelingen.
 
-Doel van deze opdracht is om een script te schrijven, genaamd `vpn.sh`, dat het gebruik van `openfortivpn` zo eenvoudig mogelijk maakt zodat je de precieze configuratie en argumenten die je aan het commando moet meegeven niet hoeft te onthouden.
+- Controleer het aantal argumenten, dat moet exact 1 zijn. Geef anders een foutboodschap en stop het script.
 
-**Let op!** Dit script kan je enkel off-campus testen. Op de campus zal de VPN-verbinding niet werken.
+- Controleer of het argument een directory is. Geef anders een foutboodschap en stop het script.
 
-- Opties en argumenten
-    - `help`, `-h`, `--help`: druk een Usage:-boodschap af (vb. zie hieronder)
-    - `info`, `status`: druk info ivm de huidige status van de VPN-verbinding af
-    - `on`,  `true`,  `1`: zet de VPN-verbinding aan
-    - `off`, `false`,  `0`: zet de VPN-verbinding aan
-    - `check`, `deps`: controleer of alle nodige commando's geïnstalleerd zijn
-- Verwerking van opties/argumenten
-    - Je kan er voor zorgen dat opties/argumenten "case insensitive" zijn, bv. door ze eerst om te zetten naar kleine letters (kijk naar Bash parameter substitution)
-    - Je kan er voor zorgen dat argumenten afgekort kunnen worden, zolang ze niet dubbelzinnig zijn (bv. `vpn.sh o` voor `on` of `off`, `c` of `ch` voor `check`). Voeg daarvoor waar nodig patronen toe aan het case-statement dat de argumenten verwerkt.
-    - Als er geen argumenten gegeven worden, veronderstellen we dat de gebruiker `info` wil.
-    - Als er meer dan één argument gegeven wordt, druk een foutboodschap af en sluit af met een foutstatus.
-    - Als het argument niet herkend wordt, druk een foutboodschap af en suggereer hoe de gebruiker de Usage:-boodschap kan opvragen. Sluit af met een foutstatus.
-- Globale variabelen
-    - `vpn_endpoint`: voor de VPN-server (`vpn-ssl.hogent.be`)
-    - `vpn_port`: voor de poort (`443`)
-- De VPN-verbinding aanzetten gebeurt met volgende commando's:
-    - `sudo openfortivpn "${vpn_endpoint}:${vpn_port}" --saml-login`
-    - De output van dit commando zal vermelden dat je in een browser naar een bepaalde URL moet gaan om de authenticatie af te ronden. Je kan die URL automatisch in je browser openen met `xdg-open URL` (waarbij je `URL` vervangt door de juiste URL, gebruik makende van de variabelen voor VPN-server en poort).
-    - Voer deze beide commando's uit op de achtergrond zodat je je prompt meteen terugkrijgt.
-- De VPN-verbinding afsluiten gebeurt als volgt:
-    - Gebruik eerst `pgrep` om het proces-ID van `sudo openfortivpn` op te zoeken. Sla deze op in een variabele (die leeg zal zijn als het proces niet gevonden werd).
-    - Gebruik `sudo pkill` om het proces te beëindigen (als het gevonden werd) of geef een foutboodschap als het proces niet gevonden werd.
-- Voor de status van de VPN-verbinding kan je het volgende tonen:
-    - Zoek eerst naar het oudste Process-ID van `sudo openfortivpn`. Als het niet gevonden is, is VPN niet actief. Druk een boodschap af om dit aan de gebruiker te laten weten en sluit het script af met exit-status 0 (er is immers geen fout gebeurd).
-    - Gebruik `pstree` om alle processen te tonen in een boomstructuur, startend vanaf deze die in de vorige stap gevonden was.
-    - Toon IP-adresinformatie van netwerkinterface `ppp0` (dit is de naam van de virtuele netwerkinterface voor de VPN-verbinding)
-    - Toon DNS-informatie voor de `ppp0` netwerkinterface (met `resolvectl`)
-- De controle op de nodige commando's gebeurt als volgt:
-    - De commando's `ip`, `openfortivpn`, `pgrep`, `pkill`, `pstree`, `resolvectl`, `xdg-open` moeten geïnstalleerd zijn. Maak hier een lijst of array voor aan.
-    - Loop over elk element in de lijst/array en controleer met `which` of het commando bestaat.
-        - Zo ja, druk de naam van het commando af en "OK"
-        - Zo nee, druk de naam van het commando af en "FAIL"
-        - Maak de tekst mooi op, bv. door de commando's en OK/FAIL mooi uit te lijnen en/of kleuren te gebruiken.
-    - Op het einde druk je een tekst af die ofwel stelt dat alle commando's geïnstalleerd zijn, ofwel dat je nog bepaalde commando's moet installeren.
-    - Vraag vervolgens de versie op van `openfortivpn` (met optie `--version`). Wanneer deze kleiner is dan 1.23.0, druk je een foutboodschap af dat deze versie niet geschikt is. Deze zal immers nog geen ondersteuning hebben voor SAML login.
-    - Tip: je moet enkel controleren op de "minor version". Er bestaat geen release van `openfortivpn` met een "major version" kleiner dan 1.
+- Controleer of de directory een Github-repository is (bevat een subdirectory `.git/`). Geef anders een foutboodschap en stop het script.
 
-Voorbeelden van gebruik. Merk op dat we hier het script gekopieerd hebben naar een directory in het `$PATH` van de gebruiker en dat we de extensie `.sh` hebben weggelaten.
+- Tel het aantal commits (bijvoorbeeld: `git log --pretty=oneline` en tel het aantal lijnen) en afhankelijk van het resultaat geef je een aanmoediging (pas de tekst gerust aan):
+    - 0 commits: "Komaan, niet wachten, maak een eerste commit!"
+    - 1 commit: "Alvast 1 commit, goed begonnen!"
+    - 2-10 commits: "Je hebt al AANTAL commits gemaakt, doe zo verder!"
+    - meer dan 10 commits: "Fantastisch werk, al AANTAL commits!"
 
-```console
-$ vpn
-ℹ VPN connection does not seem to be active.
+- Controleer of er lokale wijzigingen zijn met `git status -s` (toont 1 lijn per bestand met wijzigingen). Afhankelijk van de uitvoer geef je een aanmoediging:
+    - uitvoer is een lege string: "Geen lokale wijzigingen, goed bezig!"
+    - uitvoer is niet leeg: "Je hebt nog lokale wijzigingen, commit ze zo snel mogelijk!"
 
-Enable VPN with command: vpn on
-$ vpn foo
-🔥 Invalid option or argument: foo
-   Use "vpn help" for usage information
-$ vpn help
-Usage: vpn [COMMAND]
+- Controleer of er een leesbaar bestand met de naam `README.md` bestaat. Geef een aanmoediging:
+    - bestand bestaat: "README.md bestaat, goed zo!"
+    - bestand bestaat niet: "README.md bestaat niet, maak er één aan met wat uitleg over je project!"
 
-Use openfortivpn to connect to HOGENT's VPN endpoint with SAML login.
+- Doe hetzelfde voor een bestand `LICENSE.md` en `.gitignore`.
 
-COMMANDS
+- Ga met een for-loop over alle bestanden in de root van je Github-directory
+    - als het een directory is, druk je af "DIRECTORY wordt overgeslagen" (we gaan niet recursief in directories om te vermijden dat je `find ... -exec` moet gebruiken)
+    - als het een *block special* of *character special* bestand is, druk je af "BESTAND is een speciaal bestand, hoort deze thuis in de repository?"
+    - controleer het bestandstype met `file BESTAND`
+    - als het bestandstype gelijk is aan "ASCII text, with CRLF line terminators", geef dan de melding "BESTAND heeft DOS regeleindes, zet om met `dos2unix`"
+    - als het eerste woord van het type begint met "ELF", geef dan de melding "BESTAND is een binaire executable, hoort deze thuis in de repository?"
+    - in alle andere gevallen druk je niets af en ga je gewoon verder met de volgende bestanden
 
-  help, -h, --help
-                 Print this help message
-  info, status
-                 Print status of the VPN connection
-                 (default action)
-  on, true, 1
-                 Connect to the VPN endpoint
-  off, false, 0
-                 Disconnect from the VPN endpoint
-  check, deps
-                 Check whether necessary commands are installed
+- Zoek naar shellscripts in de Github-repository. Als je er vindt, controleer dan of ze uitvoerbaar zijn:
+    - indien niet uitvoerbaar: "Shellscript SCRIPT is niet uitvoerbaar, maak het uitvoerbaar met `chmod +x SCRIPT`"
+    - indien uitvoerbaar: "Shellscript SCRIPT is uitvoerbaar, goed zo!"
 
-Commands (except on, off) can be abbreviated, e.g. c or ch instead of check.
-
-EXAMPLES
-
- $ vpn           Shows VPN status
- $ vpn on        Connect VPN
- $ vpn 0         Disconnect VPN
- $ vpn --help    Print this help message
- $ vpn c         Check dependencies
-
-REMARKS
-
-The script asks for superuser access with sudo. You can configure sudo to
-allow the command be executed without providing your user password, e.g. by
-creating a file /etc/sudoers.d/openfortivpn with content:
-
-  %wheel      ALL = (ALL) NOPASSWD: /usr/bin/openfortivpn
-
-$ vpn check
-ℹ Checking dependencies:
-ip                            [ OK ]
-openfortivpn                  [ OK ]
-pgrep                         [ OK ]
-pkill                         [ OK ]
-pstree                        [FAIL]
-resolvectl                    [ OK ]
-xdg-open                      [ OK ]
-🔥 One or more commands missing, ensure you have them installed!
-openfortivpn version: 1.22.3  [FAIL]
-🔥 Minimal required version is 1.23.0
-   Your version of openfortivpn doesn't support SAML login!
-   See <https://github.com/adrienverge/openfortivpn/blob/master/CHANGELOG.md#1230>
-```
-
-Na installatie van alle nodige packages zou je dit moeten zien:
-
-```console
-$ vpn check
-ℹ Checking dependencies:
-ip                            [ OK ]
-openfortivpn                  [ OK ]
-pgrep                         [ OK ]
-pkill                         [ OK ]
-pstree                        [ OK ]
-resolvectl                    [ OK ]
-xdg-open                      [ OK ]
-✅ All commands are present!
-openfortivpn version: 1.23.1  [ OK ]
-```
-
-Het aanzetten gebeurt zoals hieronder. Merk op dat niet alle tekst tegelijk getoond wordt, een deel zal je pas zien na inloggen via de browser.
-
-```console
-vpn on
-🌐 Activating VPN connection.
-INFO:   Listening for SAML login on port 8020
-INFO:   Authenticate at 'https://vpn-ssl.hogent.be:443/remote/saml/start?redirect=1'
-INFO:   Processing HTTP SAML request
-INFO:   Connected to gateway.
-INFO:   Authenticated.
-INFO:   Remote gateway has allocated a VPN.
-Using interface ppp0
-Connect: ppp0 <--> /dev/pts/4
-INFO:   Got addresses: [192.168.88.18], ns [193.190.173.1, 193.190.173.2], ns_suffix [hogent.be]
-INFO:   Negotiation complete.
-local  IP address 192.168.88.18
-remote IP address 193.190.88.180
-INFO:   Interface ppp0 is UP.
-INFO:   Setting new routes...
-INFO:   Adding VPN nameservers...
-Dropped protocol specifier '.openfortivpn' from 'ppp0.openfortivpn'. Using 'ppp0' (ifindex=9).
-INFO:   Tunnel is up and running.
-```
-
-Er zou nu een browservenster moeten geopend worden waar je kan aanmelden met je HOGENT-account. Je zal ook via de Outlook-app je login moeten bevestigen. Na afloop toont het browservenster deze boodschap:
-
-> SAML session id received from Fortinet server. VPN will be established...
-> You may close this browser tab now.
-> 
-> This window will close automatically in 5 seconds.
-
-VPN is nu actief! Dit kan je testen met `vpn status`
-
-```console
-vpn status
-ℹ Process info:
-sudo,86059 openfortivpn vpn-ssl.hogent.be:443 --saml-login
-  └─sudo,86130 openfortivpn vpn-ssl.hogent.be:443 --saml-login
-      └─openfortivpn,86131 vpn-ssl.hogent.be 443 --saml-login
-          ├─pppd,86175 230400 :169.254.2.1 noipdefault ipcp-accept-local noaccomp noauth default-asyncmap nopcomp receive-all nodefaultroute nodetach lcp-max-configure 40 mru 1354...
-          ├─{openfortivpn},86176
-          ├─{openfortivpn},86177
-          ├─{openfortivpn},86178
-          └─{openfortivpn},86179
-ℹ IP:
-9: ppp0: <POINTOPOINT,MULTICAST,NOARP,UP,LOWER_UP> mtu 1354 qdisc fq_codel state UNKNOWN group default qlen 3
-    link/ppp 
-    inet 192.168.88.18 peer 193.190.88.180/32 scope global ppp0
-       valid_lft forever preferred_lft forever
-ℹ DNS:
-Link 9 (ppp0): 193.190.173.1 193.190.173.2
-```
-
-De verbinding terug uitschakelen:
-
-```console
-$ vpn off
-🛑 Stopping VPN connection.
-[sudo] password for USERNAME: 
-INFO:   Cancelling threads...
-INFO:   Cleanup, joining threads...
-INFO:   Setting ppp0 interface down.
-INFO:   Restoring routes...
-INFO:   Removing VPN nameservers...
-Dropped protocol specifier '.openfortivpn' from 'ppp0.openfortivpn'. Using 'ppp0' (ifindex=9).
-Hangup (SIGHUP)
-Modem hangup
-Connect time 4.9 minutes.
-Sent 113056 bytes, received 114233 bytes.
-Connection terminated.
-INFO:   pppd: The link was terminated by the modem hanging up.
-INFO:   Terminated pppd.
-INFO:   Closed connection to gateway.
-INFO:   Logged out.
-```
+- **Uitbreiding:**
+    - maak de uitvoer aantrekkelijker met ANSI-kleuren en/of emoji's of hoofdingen tussen de verschillende controles.
+    - voeg zelf nuttige controles toe

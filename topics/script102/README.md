@@ -1,129 +1,70 @@
-# Hst. 4 - script102
+# Labo Scripting 102
 
-## Positionele parameters
+## Fouten opsporen/voorkomen
 
-1. Schrijf een script `params.sh` dat volgende zaken afdrukt (zie voorbeeld hieronder):
+Vanaf nu begin je elk script met de volgende drie lijnen:
 
-    - De naam van het script
-    - Het aantal argumenten
-    - Het eerste, derde en tiende argument (of niets als deze niet opgegeven zijn)
-    - Als er meer dan drie positionele parameters opgegeven werden, gebruik dan `shift` om alle waarden drie plaatsen op te schuiven
-    - Geef opnieuw het aantal (overblijvende) argumenten
-    - En druk ze allemaal ineens af
-
-    ```console
-    $ ./params.sh 
-    Script name: ./params.sh
-    num params:  0
-    Param 1:     
-    Param 3:     
-    Param 10:    
-    num params:  0
-    Remaining:  
-    $ ./params.sh een
-    Script name: ./params.sh
-    num params:  1
-    Param 1:     een
-    Param 3:     
-    Param 10:    
-    num params:  1
-    Remaining:   een
-    $ ./params.sh een twee drie vier
-    Script name: ./params.sh
-    num params:  4
-    Param 1:     een
-    Param 3:     drie
-    Param 10:    
-    num params:  1
-    Remaining:   vier
-    $ ./params.sh een twee drie vier vijf zes zeven acht negen tien elf
-    Script name: ./params.sh
-    num params:  11
-    Param 1:     een
-    Param 3:     drie
-    Param 10:    tien
-    num params:  8
-    Remaining:   vier vijf zes zeven acht negen tien elf
-    ```
-
-2. Schrijf een script `all-params.sh` dat elke positionele parameter op een aparte lijn afdrukt. Gebruik hiervoor een for-lus. Als de gebruiker geen argumenten opgegeven heeft, drukt het script een foutboodschap af (zie voorbeeld hieronder) en sluit het script af met foutcode (exit-status verschillend van 0).
-
-    ```console
-    $ ./all-params.sh
-    Geen argumenten opgegeven!
-    $ echo $?
-    1
-    $ ./all-params.sh dit is een test
-    dit
-    is
-    een
-    test
-    $ echo $?
-    0
-    $ ./all-params.sh dit is "een test"
-    dit
-    is
-    een test
-    ```
-
-3. Schrijf een script `sort-passwd.sh` dat het password-bestand afdrukt in tabelvorm (gebruik hiervoor het commando `column -t`)
-
-    - Als de gebruiker als argument een cijfer van 1 t/m 7 opgeeft, dan wordt de uitvoer gesorteerd volgens dat veld (bv. 1 = username, 3 = UID, 4 = GID, enz.)
-    - Als er geen argument opgegeven is, wordt "1" verondersteld. Eventuele extra argumenten worden genegeerd.
-    - Controleer of eventuele argumenten de correcte vorm hebben (cijfer tussen 1 en 7). Geef zo nodig een foutboodschap en sluit af met een foutcode
-    - Optioneel: als je argument 3 of 4 opgeeft, dan zou je numeriek moeten sorteren i.p.v. alfabetisch. Pas het script aan om dit toe te laten.
-
-        Tip: maak een variabele aan om het type van sorteren te selecteren. Als de opgegeven kolom 3 of 4 is, steek je er de optie van het commando `sort` voor numeriek sorteren in, anders de optie om alfabetisch te sorteren. Gebruik de variabele dan in het sorteercommando.
-
-    ```console
-    $ ./sort-passwd.sh 
-    _apt           x  105 65534                          /nonexistent            /usr/sbin/nologin
-    avahi-autoipd  x  115 124    Avahi autoip daemon,,,  /var/lib/avahi-autoipd  /usr/sbin/nologin
-    avahi          x  120 129    Avahi mDNS daemon,,,    /var/run/avahi-daemon   /usr/sbin/nologin
-    ...
-    $ ./sort-passwd.sh 3
-    root     x  0      0      root            /root          /bin/bash
-    daemon   x  1      1      daemon          /usr/sbin      /usr/sbin/nologin
-    ...
-    osboxes  x  1000   1000   osboxes.org,,,  /home/osboxes  /bin/bash
-    nobody   x  65534  65534  nobody          /nonexistent   /usr/sbin/nologin
-    $ ./sort-passwd.sh 0
-    Please enter a number between 1 and 7 (included)
-    $ ./sort-passwd.sh 8
-    Please enter a number between 1 and 7 (included)
-    $ ./sort-passwd.sh foo
-    ./sort-passwd.sh: line 11: [: foo: integer expression expected
-    Please enter a number between 1 and 7 (included)
-    ```
-
-## Netwerkinstellingen opvragen
-
-Schrijf een script `ip-info.sh` dat essentiële informatie over de IP-configuratie van het systeem geeft, meer bepaald:
-
-- Voor elke interface (behalve de loopback) het IP-adres met bijhorend netwerkmasker in CIDR notatie
-    - Tip: gebruik de `-brief` optie van het `ip`-commando
-- De default gateway (en de netwerkinterface langs waar pakketten naar "buiten" gestuurd kunnen worden)
-    - Tip: gebruik `ip`
-- De DNS-server(s)
-    - Tip: gebruik `resolvectl`
-
-Wees creatief in de uitvoer: gebruik kleuren en/of emoji's om de informatie duidelijk te maken.
-
-Een voorbeeld. De exacte interfaces en IP-adressen kunnen voor jouw situatie afwijken:
-
-```console
-osboxes@osboxes:~$ ./ip-info.sh 
-📫 IP addresses 📫
-enp0s3           UP             10.0.2.15/24 fe80::bbb0:3744:a35d:cdbc/64 
-enp0s8           UP             fe80::17d1:a3a8:10f:f05/64 
-enp0s9           UP             192.168.56.101/24 fe80::f4a8:eb4b:e94d:8220/64 
-
-🌐 Default gateway 🌐
-10.0.2.2 dev enp0s3
-
-📗 DNS server(s) 📗
-Global:
-Link 4 (enp0s9):
-Link 3 (enp0s8):
-Link 2 (enp0s3): 10.0.2.3
+```bash
+set -o errexit
+set -o nounset
+set -o pipefail
 ```
+
+1. Zoek in de man-page van Bash op wat deze opties precies doen.
+
+2. Hoe kan je deze drie commando's zo compact mogelijk herschrijven?
+
+3. Installeer `shellcheck` op je Linux-VM en controleer je scripts uit [Labo Scripting 101](../script101/). Bekijk de foutmeldingen en probeer ze te begrijpen. Pas zo nodig je scripts aan zodat er geen fouten meer zijn.
+
+Blijf ook in de toekomst telkens `shellcheck` gebruiken om je scripts te controleren!
+
+## Booleans en exitstatus, voorwaardelijke statements
+
+### Gebruikersinvoer en getallen vergelijken
+
+In het voorjaar van 2026 werd een Europese app geïntroduceerd die beweerde op een veilige manier de leeftijd van gebruikers te kunnen verifiëren. Kort erna werd door een security researcher [een kwetsbaarheid ontdekt in de app](https://cybernews.com/security/eu-age-verification-app-hack/), waardoor de verificatie makkelijk te omzeilen was. Kan jij het beter? :wink:
+
+Schrijf een script `age-verification.sh` dat de gebruiker vraagt om zijn/haar leeftijd in te voeren. Als de gebruiker 18 jaar of ouder is, druk dan een boodschap af dat toegang verleend wordt. Je kan je script nog iets geestigs laten doen, als je dat wilt. Let natuurlijk wel op met NSFW content in een educatieve context... :wink:
+
+Indien de verificatie faalt, druk een boodschap af dat toegang geweigerd wordt.
+
+Zorg ervoor dat je script ook werkt als de gebruiker een niet-numerieke waarde invoert (bv. "twintig") of helemaal niets invoert. Vraag in beide gevallen om een numerieke waarde in te voeren.
+
+Het script sluit uiteraard in alle omstandigheden af met een gepaste exit-status.
+
+### Check .ssh/ permissies
+
+Schrijf een script `check-ssh-permissions.sh` dat controleert of de permissies van de `.ssh` directory in je home-directory en je publieke en private sleutel(s) in die directory correct zijn ingesteld. Druk een boodschap af voor elke permissie die niet correct is ingesteld, en welke de correcte permissies moeten zijn. Sluit af met een exit-status van 1 als er één of meerdere problemen gevonden werden. Als alles in orde is, druk dan een boodschap af dat alles ok is en sluit af met exit-status 0.
+
+### Netwerktester
+
+Schrijf een script `network-tester.sh` dat controleert of de netwerkverbinding correct werkt. Meer bepaald test het script volgende zaken:
+
+- Heeft de machine een IP-adres?
+
+    - Gebruik hiervoor bv. `ip -br a`.
+    - Gebruik filters om in de uitvoer enkel IPv4-adressen verschillend van 127.0.0.1 te behouden
+    - Is het resultaat leeg? Druk dan een gepaste foutboodschap af en ga verder met de volgende test.
+    - Als het resultaat niet leeg is, druk dan het IP-adres (of adressen) af en ga verder met de volgende test.
+
+- Is er een default gateway ingesteld?
+
+    - Gebruik hiervoor bv. `ip r` en filters enkel het IP-adres van de default gateway te behouden
+    - Is er geen default gateway? Druk een gepaste foutboodschap af en ga verder met de volgende test.
+    - Als er een default gateway is, druk dan het IP-adres van de gateway af en ga verder met de volgende test.
+
+- Werkt routering naar het internet?
+
+    - Gebruik hiervoor bv. `ping` om een publieke server zoals 1.1.1.1 te pingen. De uitvoer van het commando mag niet op het scherm komen.
+    - Druk afhankelijk van het resultaat een gepaste boodschap af en ga verder met de volgende test.
+
+- Werkt DNS?
+
+    - Gebruik hiervoor bv. `getent ahosts` om het IP-adres van een publieke domeinnaam zoals icanhazip.com op te vragen
+    - Druk afhankelijk van het resultaat een gepaste boodschap af en ga verder met de volgende test.
+
+- Druk tenslotte je publieke IP-adres af door deze met `curl` te vragen aan icanhazip.com.
+
+- De exit-status van het script is 0 als alle tests succesvol waren, en 1 als er één of meerdere tests gefaald hebben.
+
+*Extra:* speel met de vorm van de output van het script op een manier die meerwaarde biedt aan de gebruiker. Bijvoorbeeld, je kan kleuren (zoek op hoe dit werkt! Tip: ANSI escape codes) of emoji's gebruiken om duidelijk te maken welke tests geslaagd zijn en welke niet.
