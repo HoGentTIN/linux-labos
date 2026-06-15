@@ -12,34 +12,37 @@ We gaan er vanuit dat je al een Github-account hebt. Indien niet, maak er zelf e
 
 Voor de volgende stappen werk je in jouw Linux (GUI) VM. Je kan deze herhalen op je fysieke systeem om ook daar vlot met Git te kunnen werken.
 
-1. Je kan het inloggen met gebruikersnaam en wachtwoord vereenvoudigen door een [SSH-sleutelpaar](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account) aan te maken. Maak zo'n sleutelpaar aan in de terminal (voor je gemak: zonder passphrase) en registreer de publieke sleutel bij Github. Gebruik het commando `ssh-keygen` en blijf ENTER drukken totdat je opnieuw de Bash-prompt ziet.
+1. Je kan het inloggen met gebruikersnaam en wachtwoord vereenvoudigen door een [SSH-sleutelpaar](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account) aan te maken. Maak zo'n sleutelpaar aan in de terminal (voor je gemak: zonder passphrase) en registreer de publieke sleutel bij Github. Gebruik het commando `ssh-keygen` en blijf ENTER drukken totdat je opnieuw de Bash-prompt ziet. Bijvoorbeeld:
 
     ```console
-    $ ssh-keygen -C "voornaam.naam@student.hogent.be"
-    Generating public/private rsa key pair.
-    Enter file in which to save the key (/home/bert/.ssh/id_rsa):
-    Enter passphrase (empty for no passphrase):
-    Enter same passphrase again:
-    Your identification has been saved in id_rsa.
-    Your public key has been saved in id_rsa.pub.
+    $ student@debian:~$ ssh-keygen -C "voornaam.naam@student.hogent.be"
+    Generating public/private ed25519 key pair.
+    Enter file in which to save the key (/home/student/.ssh/id_ed25519): 
+    Created directory '/home/student/.ssh'.
+    Enter passphrase for "/home/student/.ssh/id_ed25519" (empty for no passphrase): 
+    Enter same passphrase again: 
+    Your identification has been saved in /home/student/.ssh/id_ed25519
+    Your public key has been saved in /home/student/.ssh/id_ed25519.pub
     The key fingerprint is:
-    SHA256:AzAeA7KrzKUg6V4IVGTtvQf7GhY/a8vtLB8ck46TbOM bert@DESKTOP-Q690SE3
+    SHA256:8tyXe8jPlrbwAs/yY8+d9HMQ+8UQpOtzL55QYqYN674 voornaam.naam@student.hogent.be
     The key's randomart image is:
-    +---[RSA 2048]----+
-    |. o=*            |
-    | oo. *           |
-    |..  o o          |
-    |.o   . +    .    |
-    |*  .   .S  +     |
-    |O +    o+o= o    |
-    |.* .   ooX +     |
-    |. .   . =+B .    |
-    | .     .oE==     |
+    +--[ED25519 256]--+
+    |             ..  |
+    |             ..  |
+    |            .  . |
+    |             .o  |
+    |      . S . = .= |
+    |       + ..O +o o|
+    |        o +=O..=.|
+    |         ...OXB==|
+    |         .E=oXX+*|
     +----[SHA256]-----+
-    $
+
+    student@debian:~$ cat .ssh/id_ed25519.pub
+    ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFWppQa/SDv5rBcE3Xeh+X0HncGsdp8aJbmGtlB0uEyp voornaam.naam@student.hogent.be
     ```
 
-    De inhoud van het tekstbestand `~/.ssh/id_rsa.pub` kan je kopiëren en plakken in je Github-instellingen (Settings > SSH and GPG keys).
+    De inhoud van het tekstbestand `~/.ssh/id_ed25519.pub` kan je kopiëren en plakken in je Github-instellingen (Settings > SSH and GPG keys).
 
     Maak een apart sleutelpaar aan op elke machine (VM of fysiek) waar je met Git werkt. Je kan meerdere publieke sleutels registreren in Github.
 
@@ -77,7 +80,7 @@ Voor de volgende stappen werk je in jouw Linux (GUI) VM. Je kan deze herhalen op
 
     Je kan de naam van de lokale directory wijzigen of de directory verplaatsen zonder de link naar Github kwijt te spelen!
 
-5. Bekijk de inhoud van je lokale kopie van de repository. Daar vind je een aantal bestanden in [Markdown](http://daringfireball.net/projects/markdown/)-formaat. Het bestand `cheat-sheet.md` dient om in de loop van het semester nuttige commando's en troubleshooting checklists bij te houden. Zie <https://github.com/bertvv/cheat-sheets> voor enkele voorbeelden.
+5. Bekijk de inhoud van je lokale kopie van de repository. Daar vind je een aantal bestanden in [Markdown](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax)-formaat. Het bestand `cheat-sheet.md` dient om in de loop van het semester nuttige commando's en troubleshooting checklists bij te houden. Zie <https://github.com/bertvv/cheat-sheets> voor enkele voorbeelden.
 
 6. Pas deze sheet aan: vul je naam en repository-url in op de daarvoor voorziene plaats. Welke commando's leerde je al in de voorbije labo's? Registreer de wijziging in Git (`git add` en `git commit`) en hevel die over naar Github (`git push`).
 
@@ -92,7 +95,7 @@ Voor wie nog niet vertrouwd is met het werken met Git, volgen hier de belangrijk
 3. Met `git commit -m "Beschrijving van de wijzigingen"` leg je de wijzigingen vast. Doe de moeite om beschrijvende commit-boodschappen op te geven!
 4. Met `git push` stuur je de zopas lokaal geregistreerde wijzigingen naar Github.
 
-**Telkens je stopt met werken voor dit vak commit je alle wijzigingen en kopieert ze naar Github!**
+**Telkens je stopt met werken voor dit vak commit je alle wijzigingen en synchroniseer je ze met Github!**
 
 Je kan tussen elke stap `git status` uitvoeren om te verifiëren wat er gebeurd is. De uitvoer van `git status` geeft vaak ook het commando dat nodig is om de laatste stap ongedaan te maken.
 
@@ -107,6 +110,10 @@ Een versiebeheersysteem is geoptimaliseerd om te werken met *tekstbestanden.* He
 Op Github is het standaard-bestandsformaat voor opgemaakte tekst Markdown. Het is een tekstformaat met enkele eenvoudige regels om opmaak te markeren. Als je op Github een Markdown-bestand opent, wordt het omgezet in HTML. Codefragmenten kunnen getoond worden met syntaxkleuren. Neem de [documentatie op Github](https://docs.github.com/en/get-started/writing-on-github) door om het te leren kennen.
 
 **Wij raden heel sterk aan om te leren nota's te nemen in Markdown.** Markdown wordt meer en meer gebruikt en komt ook nog in latere cursussen van pas. Jupyter Notebooks, bijvoorbeeld, (gebruikt in o.a. Data Science & AI en andere vakken uit de Data Engineering-leerlijn) zijn documenten die deels bestaan uit Python-code en Markdown. Er zijn tegenwoordig ook tientallen tools om Markdown om te zetten in een veelvoud van formaten: presentaties, websites, PDFs, enz. Markdown is echt niet moeilijk en het is een nuttige vaardigheid.
+
+Maak in je repository dus zelf nieuwe Markdown-bestanden aan om je oplossingen bij te houden.
+
+- Tip: gebruik "[fenced code blocks](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/creating-and-highlighting-code-blocks)" om codefragmenten op te maken met syntaxkleuren. Geef "language identifier" `bash` op voor (delen van) scripts en `console` voor interacties op de terminal.
 
 ## Regeleindes van tekstbestanden
 
@@ -125,20 +132,13 @@ $ ./hello.sh
 
 De `^M` is een aanduiding voor dat CR-karakter.
 
-In deze repository zit een vorm van bescherming via het bestand [.gitattributes](.gitattributes). Die bepaalt o.a. dat bestanden met extensie `.sh` die gecommit worden altijd Linux-regeleindes krijgen. Als je je script echter schrijft vanop een Windows-systeem, kan het toch zijn dat het bestand Windows-regeleindes krijgt.
-
-In VS Code kan je dit rechtsonder in de statusbalk controleren. 
-
-![Regeleindes controleren](crlf.png)
-
-Staat er LF? Dan is alles ok! Staat er CRLF? Dan klik je er op en kan je het juiste soort regeleindes kiezen.
+In deze repository zit een vorm van bescherming via het bestand [.gitattributes](.gitattributes). Die bepaalt o.a. dat bestanden met extensie `.sh` die gecommit worden altijd Linux-regeleindes krijgen. Als je je script echter schrijft vanop een Windows-systeem, of het zelfs maar opent in een teksteditor op Windows, kan het toch zijn dat het bestand Windows-regeleindes krijgt. **Als je op het examen voor de vaardigheidsproef een script indient met CLRF-regeleindes, zullen we het niet beoordelen en krijg je voor dat onderdeel meteen een 0.**
 
 In Git Bash en op Linux-systemen bestaat er ook een commando `dos2unix` waarmee je tekstbestanden kan omzetten.
 
-## Studiemateriaal en referenties
+## Achtergrondinformatie en referenties
 
 - Github (n.d.). *Writing on GitHub*. <https://docs.github.com/en/get-started/writing-on-github>
 - Github (n.d.). *Adding a new SSH key to your GitHub account*. <https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account>
 - Gruber, John (2004). *Markdown*. <http://daringfireball.net/projects/markdown/>
-- Van Vreckem, Bert (2014). *Workshop Inleiding Git*, <https://bertvv.github.io/git-workshop-nl/>
 - Van Vreckem, Bert (n.d.). *Cheat Sheets*, <https://github.com/bertvv/cheat-sheets>
