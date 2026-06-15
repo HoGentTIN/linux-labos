@@ -8,8 +8,8 @@ Na het verwerken van het studiemateriaal over een specifiek onderwerp en/of het 
 |       | [Secure Shell](../topics/ssh/README.md)                                  |
 |   2   | [Software-installatie](../topics/repo_deb/README.md)                     |
 |       | [Curl](../topics/curl/README.md)                                         |
-|   3   | [Scripting 101](../topics/scripting-101/README.md)                       |
-|   4   | [Organising Users](../topics/user-mgmt/README.md)                        |
+|   3   | [Scripting 101](../topics/script101/README.md)                           |
+|   4   | [Organising Users](../topics/users/README.md)                        |
 |   5   | [Webserver](../topics/installatie-webserver-deb/README.md)               |
 |       | [Scripting 102](../topics/scripting-102/README.md)                       |
 |   6   | [Advanced text processing](../topics/advanced-text-processing/README.md) |
