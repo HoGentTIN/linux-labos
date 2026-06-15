@@ -88,4 +88,6 @@ Maak nu de gebruikers in onderstaande tabel aan. Zorg er voor dat ze al meteen b
 
 3. Nu wil je jezelf eveneens adminstrator van het systeem maken, zodat je met `sudo` beheerstaken kan uitvoeren. Aan welke groep voeg je jezelf hiervoor toe?
 
+    Tip: <https://www.debian.org/doc/manuals/debian-handbook/sect.config-misc.en.html#sect.sharing-admin-rights>
+
 4. Wanneer je jezelf toevoegt aan deze groep, zal je wellicht nog niet meteen adminrechten hebben. Je kan dit oplossen door uit te loggen en opnieuw in te loggen, maar er is ook een commando dat je kan gebruiken om dit meteen te laten gelden. Welk commando is dat?
