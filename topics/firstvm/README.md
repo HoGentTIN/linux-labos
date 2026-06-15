@@ -39,3 +39,13 @@ Meestal zal je een pas geïnstalleerd systeem nog configureren naar je wensen. O
 Op dit moment is je VM goed geconfigureerd en heb je de meeste applicaties die je nodig zal hebben geïnstalleerd. Het is nu een goed moment om een backup te nemen waar je later op terug kan vallen als je door te experimenteren je VM onbruikbaar gemaakt hebt. Dat kan door in het venster waarbinnen de VM draait "Machine > Snapshot maken" te kiezen. Je geeft de snapshot een naam (bv. "Na installatie"). Dat kan terwijl de VM draait!
 
 ![Een snapshot maken in VirtualBox](vbox-snapshot.png)
+
+## De VM uitzetten
+
+Let op bij het **uitschakelen van de VM**: doe dit **NOOIT** door het VirtualBox-venster waarbinnen de VM draait af te sluiten met de knop rechtsboven en dan "De machine uitschakelen". Dit komt overeen met de stroom onderbreken op een fysiek toestel en kan leiden tot corrupte bestanden, bijvoorbeeld wanneer een schrijfoperatie nog in een geheugenbuffer staat en niet is voltooid.
+
+Sluit in plaats daarvan af met een van de volgende methoden:
+
+- Kies voor "De staat van de machine opslaan". Als je de volgende keer de VM aanzet, ben je meteen ingelogd en kan je verder waar je de vorige keer gebleven was.
+- Open in de grafische omgeving van je VM het startmenu en kies voor de optie om het systeem uit te schakelen.
+- Open een terminal in je VM en gebruik het commando `sudo poweroff` om het systeem netjes af te sluiten.
