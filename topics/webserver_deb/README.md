@@ -21,10 +21,15 @@ MariaDB is de naam van een variant (fork) van de bekende database MySQL. Op somm
 Hieronder vind je een SQL-script waarmee je een database kan aanmaken met wat demo-info. Je kan het opslaan in een bestand en met het `mysql`-commando uitvoeren.
 
 ```sql
+-- Create database and user
 DROP DATABASE IF EXISTS www_db;
-DROP USER IF EXISTS www_user;
-
 CREATE DATABASE www_db;
+
+DROP USER IF EXISTS www_user;
+GRANT ALL ON www_db.* TO 'www_user'@'localhost' IDENTIFIED BY 'letmein';
+FLUSH PRIVILEGES;
+
+-- Creating database table and add some data
 CREATE TABLE www_db.todo_list (
   item_id INT AUTO_INCREMENT,
   content VARCHAR(255),
@@ -36,8 +41,6 @@ VALUES
   ("Update world domination plans"),
   ("Call mom");
 
-GRANT ALL ON www_db.* TO 'www_user'@'localhost' IDENTIFIED BY 'letmein';
-FLUSH PRIVILEGES;
 ```
 
 Een PHP-script (`todo.php`) haalt de informatie uit de database en toont deze in een webpagina.

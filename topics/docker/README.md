@@ -1,4 +1,4 @@
-# Lab 8.4.2: Container virtualization
+# Labo Container virtualization
 
 In this lab assignment, you'll explore the basic operation of Docker containers. The assignment contains step-by-step instructions that will help you building insight in how Docker works. Remark that you won't be a Docker expert after finishing the assignment. You may not understand everything that's going on the first time you try it. Carefully examine any output to see what happens and how everything works.
 
@@ -12,7 +12,7 @@ Add the most common commands that you need to manage Docker in a cheat sheet!
 
 After completing this assignment, you should have basic understanding on how to work with Docker: managing containers, container images, volumes, and using Docker Compose to set up reproducible, multi-container environments.
 
-## 8.4.2.1 Set up the lab environment
+## Set up the lab environment
 
 Ensure you have a working copy of the Github repository in your Linux Mint VM. Go to the `dockerlab/` directory and run the script that will install Docker:
 
@@ -58,7 +58,7 @@ Open a terminal and try out the following commands to check if your Docker insta
 
 The directory `dockerlab/labs/` contains files that you will need for some of the lab assignments below.
 
-## 8.4.2.2 Our first containers
+## Our first containers
 
 ### Hello world!
 
@@ -137,7 +137,7 @@ What's the forwarded port for the `helloapp` container? There's several ways to 
 
 ![The website served by the helloapp container](img/1-helloapp.png).
 
-## 8.4.2.3 Persistent data
+## Persistent data
 
 When you stop and remove a container, all data in that container is gone. Often, it is necessary to preserve some data between consecutive instances of a container. In this section, we'll create a container with a MySQL database and we'll see how you can save the database contents even after the container was destroyed.
 
@@ -254,7 +254,7 @@ We now have successfully created a volume that can be used to store persistent d
 
 **Note:** Running a database in a container can be useful for test setups, but in production you need a more robust solution, a dedicated server (either "bare metal" or a high-performance VM) used just for that purpose.
 
-## 8.4.2.4 Custom images
+## Custom images
 
 In many situations, e.g. when you want to deploy a webapplication in a container, you'll need to customize an existing Docker image, or create one from scratch. In this part of the lab, we'll explore the possibilities.
 
@@ -330,7 +330,7 @@ The `Dockerfile` format is rather awkward and very limited. For example, the RUN
 
 If your needs are becoming too complex, it's best to keep the Dockerfile as simple as possible, and use a configuration management system for the rest of the installation.
 
-## 8.4.2.5 Layered file system
+## Layered file system
 
 A Docker image is fundamentally different than a "normal" VM disk image. The latter is nothing more than a file containing, byte for byte, the contents of what would be written to a physical disk partition. When mounted, it contains the filesystem with a directory tree. A Docker image consists of several so-called layers. Each layer adds some files and/or directories to the filesystem.
 
@@ -362,7 +362,7 @@ Rebuild the image (give it another name, e.g. `static-site-2`). How many layers 
 
 Make any change to the `index.html` file (e.g. change the background colour), recreate the .tar.bz2 archive and rebuild the image. Check the output of the build process. You should see that some layers can be reused from the previous image version (message "Using cache" in the output). Inspect the layers and check which ones have changed and which ones haven't.
 
-## 8.4.2.6 Docker compose
+## Docker compose
 
 A container should only have a single application running inside. Consequently, putting an entire LAMP-stack (webserver + database) in a single container is bad practice. When we want to run a dynamic webapplication with a database backend on Docker, we need at least two containers: one with the database, the other with the webserver. The webserver can only start if the database is already up and running. Environments with multiple containers and dependencies between services running on them are quite common.
 

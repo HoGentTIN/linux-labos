@@ -16,34 +16,15 @@ set -o pipefail  # do not mask errors in piped commands
 #------------------------------------------------------------------------------
 
 # Location of provisioning scripts and files
-export readonly PROVISIONING_SCRIPTS="/vagrant/provisioning/"
+readonly PROVISIONING_SCRIPTS="/vagrant/provisioning/"
 # Location of files to be copied to this server
-export readonly PROVISIONING_FILES="${PROVISIONING_SCRIPTS}/files/${HOSTNAME}"
+readonly PROVISIONING_FILES="${PROVISIONING_SCRIPTS}/files/${HOSTNAME}"
 
-# Database root password
-readonly db_root_password='IcAgWaict9?slamrol'
-
-# Database name
-readonly db_name=trialsite
-
-# Database table
-readonly db_table=trialsite_tbl
-
-# Database user
-readonly db_user=www_user
-
-# Database password
-readonly db_password='Kof3Cup.ByRu'
+export PROVISIONING_SCRIPTS PROVISIONING_FILES
 
 #------------------------------------------------------------------------------
 # Functions
 #------------------------------------------------------------------------------
-
-# Predicate that returns exit status 0 if the database root password
-# is not set, a nonzero exit status otherwise.
-is_mysql_root_password_empty() {
-  mysqladmin --user=root status > /dev/null 2>&1
-}
 
 #------------------------------------------------------------------------------
 # Provision server
@@ -56,46 +37,35 @@ log "=== Starting server specific provisioning tasks on ${HOSTNAME} ==="
 
 log "Installing MariaDB server"
 
-dnf install -y mariadb-server 
+apt-get install -y mariadb-server 
 
-log "Enabling MariaDB service"
-
-systemctl enable --now mariadb.service
-
-log "Setting firewall rules"
-
-firewall-cmd --add-service=mysql --permanent
-firewall-cmd --reload
+# In the code below, we use the `mysql` client to execute SQL statements on the
+# server. A provisioning script is executed as root, so the `mysql` command will
+# have root acces to the database server, without needing to specify a password.
 
 log "Securing the database"
 
-if is_mysql_root_password_empty; then
+# These are the operations performed by the `mysql_secure_installation` script,
+# but we execute them here in a non-interactive way, so that they can be part
+# of the provisioning script.
 mysql <<_EOF_
-  SET PASSWORD FOR 'root'@'localhost' = PASSWORD('${db_root_password}');
   DELETE FROM mysql.user WHERE User='';
   DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');
   DROP DATABASE IF EXISTS test;
   DELETE FROM mysql.db WHERE Db='test' OR Db='test\\_%';
   FLUSH PRIVILEGES;
 _EOF_
-fi
 
 log "Creating database and user"
 
-mysql --user=root --password="${db_root_password}" << _EOF_
-CREATE DATABASE IF NOT EXISTS ${db_name};
-GRANT ALL ON ${db_name}.* TO '${db_user}'@'%' IDENTIFIED BY '${db_password}';
-FLUSH PRIVILEGES;
-_EOF_
+# TODO: add the SQL code from the webserver_deb lab to create the database
+# and the user, and grant the user permissions on the database.
+# Replace hard-coded values with the variables defined above!
 
 log "Creating database table and add some data"
 
-mysql --user="${db_user}" --password="${db_password}" "${db_name}" <<_EOF_
-CREATE TABLE IF NOT EXISTS ${db_table} (
-  id int(5) NOT NULL AUTO_INCREMENT,
-  name varchar(50) DEFAULT NULL,
-  PRIMARY KEY(id)
-);
-REPLACE INTO ${db_table} (id,name) VALUES (1,"Tuxedo T. Penguin");
-REPLACE INTO ${db_table} (id,name) VALUES (2,"Bobby Tables");
-_EOF_
+# TODO: add the SQL code from the webserver_deb lab to create the table and
+# insert some data. Use the credentials of the newly created database user
+# here, which is an additional check that the user has correct permissions on
+# the database.
+# Again, replace hard-coded values with the variables defined above!
