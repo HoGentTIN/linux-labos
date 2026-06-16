@@ -1,4 +1,4 @@
-# Labo Webserver
+# Labo Webserver (Debian)
 
 In dit labo zullen we een webserver opzetten in je Linux-VM. Eén van de redenen waarom Linux zo'n dominante positie heeft verworven in het datacenter is doordat het werd ingezet als een platform voor webapplicaties, meer bepaald in de vorm van de zgn. LAMP-stack. Deze afkorting staat voor Linux + Apache + MySQL + PHP. De combinatie vormt een platform voor het ontwikkelen van webapplicaties waar vele bekende websites (bv. Facebook) op gebaseerd zijn.
 
@@ -87,4 +87,3 @@ Nu is er wel een workaround hiervoor: open de netwerkinstellingen van je VM, en 
 - Guest Port: 80
 
 Het effect is dat alle netwerkverkeer naar poort 8080 op je fysieke systeem zal doorgestuurd worden naar poort 80 van je VM. Controleer of je de webpagina's op je VM op deze manier kan zien op je fysieke systeem! Welke URL moet je hiervoor gebruiken in je webbrowser?
-
