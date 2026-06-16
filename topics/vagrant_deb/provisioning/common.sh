@@ -19,6 +19,22 @@ set -o pipefail  # do not mask errors in piped commands
 # Set to 'yes' if debug messages should be printed.
 readonly debug_output='yes'
 
+# Information for creating the database. Since these values are needed in both
+# the `db` and `web` provisioning scripts, we define them here in the common
+# script, so that they can be reused in both scripts.
+
+# Database name
+readonly db_name=www_db
+
+# Database table
+readonly db_table=todo_list
+
+# Database user
+readonly db_user=www_user
+
+# Database password
+readonly db_password='Kof3Cup.ByRu'
+
 #------------------------------------------------------------------------------
 # Helper functions
 #------------------------------------------------------------------------------
@@ -55,28 +71,10 @@ error() {
 
 log '=== Starting common provisioning tasks ==='
 
-# TODO: insert common provisioning code here, e.g. install EPEL repository, add
-# users, enable SELinux, etc.
+# TODO: insert common provisioning code here, e.g. installing packages that you
+# need on all VMs.
 
-log "Ensuring SELinux is active"
-
-if [ "$(getenforce)" != 'Enforcing' ]; then
-    # Enable SELinux now
-    setenforce 1
-
-    # Change the config file
-    sed -i 's/SELINUX=.*/SELINUX=enforcing/' /etc/selinux/config
-fi
-
-log "Installing useful packages"
-
-dnf install -y \
-    bind-utils \
-    cockpit \
-    nano \
-    tree
-
-log "Enabling essential services"
-
-systemctl enable --now firewalld.service
-systemctl enable --now cockpit.socket
+# Update the package index on all servers.
+# Note: we don't upgrade, because that may cause problems with VirtualBox guest
+# additions (when the kernel is updated)
+apt-get update

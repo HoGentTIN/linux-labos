@@ -16,9 +16,11 @@ set -o pipefail  # do not mask errors in piped commands
 #------------------------------------------------------------------------------
 
 # Location of provisioning scripts and files
-export readonly PROVISIONING_SCRIPTS="/vagrant/provisioning/"
+readonly PROVISIONING_SCRIPTS="/vagrant/provisioning/"
 # Location of files to be copied to this server
-export readonly PROVISIONING_FILES="${PROVISIONING_SCRIPTS}/files/${HOSTNAME}"
+readonly PROVISIONING_FILES="${PROVISIONING_SCRIPTS}/files/${HOSTNAME}"
+
+export PROVISIONING_SCRIPTS PROVISIONING_FILES
 
 #------------------------------------------------------------------------------
 # "Imports"
@@ -33,4 +35,4 @@ source ${PROVISIONING_SCRIPTS}/common.sh
 
 log "Starting server specific provisioning tasks on ${HOSTNAME}"
 
-# TODO: insert code here, e.g. install Apache, add users, etc.
+# TODO: insert code here, e.g. install Apache, add website content, etc.
