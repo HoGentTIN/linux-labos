@@ -1,0 +1,38 @@
+#! /bin/bash
+#
+# Provisioning script for srv001
+
+#------------------------------------------------------------------------------
+# Bash settings
+#------------------------------------------------------------------------------
+
+# Enable "Bash strict mode"
+set -o errexit   # abort on nonzero exitstatus
+set -o nounset   # abort on unbound variable
+set -o pipefail  # do not mask errors in piped commands
+
+#------------------------------------------------------------------------------
+# Variables
+#------------------------------------------------------------------------------
+
+# Location of provisioning scripts and files
+readonly PROVISIONING_SCRIPTS="/vagrant/provisioning/"
+# Location of files to be copied to this server
+readonly PROVISIONING_FILES="${PROVISIONING_SCRIPTS}/${HOSTNAME}"
+
+export PROVISIONING_SCRIPTS PROVISIONING_FILES
+
+#------------------------------------------------------------------------------
+# "Imports"
+#------------------------------------------------------------------------------
+
+# Actions/settings common to all servers
+source ${PROVISIONING_SCRIPTS}/common.sh
+
+#------------------------------------------------------------------------------
+# Provision server
+#------------------------------------------------------------------------------
+
+log "Starting server specific provisioning tasks on ${HOSTNAME}"
+
+# TODO: insert code here, e.g. install Apache, add users, etc.
