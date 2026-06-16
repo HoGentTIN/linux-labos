@@ -190,3 +190,7 @@ $connection->close();
 We kunnen bij connectieproblemen verleid worden tot zoeken naar problemen bij de firewall. Maar, omdat de database-service op dezelfde VM geïnstalleerd is als Apache, verlopen de verbindingen van het ene proces naar het andere niet via het externe netwerk, maar over de loopback-interface. Wie het verkeer monitort met e.g. Wireshark of `tcpdump` (zie het vak "CyberSecurity & Virtualisation"), zou dit kunnen aantonen. Dit valt echter buiten de scope van deze Linux-cursus.
 
 Long story short: Het is in dit geval SELinux die niet toelaat dat Apache zomaar een netwerkverbinding met een database-server mag initialiseren. Om dit toch toe te laten, moet je een SELinux boolean instellen. De stappen hiervoor vind je eveneens terug in de manual [Using SELinux](https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/10/html/using_selinux/troubleshooting-problems-related-to-selinux#fixing-analyzed-selinux-denials).
+
+Het eindresultaat moet er zo uitzien:
+
+![Webserver eindresultaat](./image.png)
