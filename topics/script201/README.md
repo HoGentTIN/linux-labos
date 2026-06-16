@@ -1,6 +1,8 @@
 # Labo Scripting 201
 
-## 1. Genereer een wachtwoordzin
+Dit labo bevat enkele complexere scripting-oefeningen waarin alle in de cursus besproken onderwerpen aan bod komen.
+
+## Genereer een wachtwoordzin
 
 Schrijf een script `passphrase.sh` dat een willekeurige wachtwoordzin genereert zoals gesuggereerd door <http://xkcd.com/936/>. Gebruik een woordenlijst zoals `/usr/share/dict/words` (moet je mogelijks installeren).
 
@@ -48,7 +50,7 @@ Usage: ...
 
 ```
 
-## 2. Backup-script
+## Backup-script
 
 Schrijf een script om een backup te maken van de gegeven directory, meer bepaald een Tar-archief gecomprimeerd met bzip2.
 
@@ -68,7 +70,7 @@ Schrijf een script om een backup te maken van de gegeven directory, meer bepaald
 
 Ook hier kan je starten met het sjabloon dat op een gelijkaardige manier gestructureerd is als dat voor de vorige oefening.
 
-## 3. Analyseer Github repo
+## Analyseer Github repo
 
 Schrijf een script `analyse-github-repo.sh` waaraan je één argument meegeeft dat de naam van een directory moet zijn waarin zich een Github-repository zou moeten bevinden. Het script analyseert de repository en geeft waar nodig enkele aanbevelingen.
 

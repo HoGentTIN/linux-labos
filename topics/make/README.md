@@ -1,5 +1,7 @@
 # Labo Automatiseren van workflows met Makefiles
 
+In dit labo leer je hoe je Makefiles kan gebruiken om workflows te automatiseren. Makefiles worden vaak gebruikt om C-code te compileren, maar kunnen ook voor andere doeleinden gebruikt worden. In dit labo zullen we Makefiles ook gebruiken om PDF-bestanden te genereren vanuit LaTeX en om Markdown-bestanden om te zetten naar een reveal.js-presentatie.
+
 ## Hello!
 
 Ga naar de directory `makefiles/hello/` en bestudeer de inhoud van de bestanden die je daar vindt.

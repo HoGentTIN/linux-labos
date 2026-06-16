@@ -1,4 +1,4 @@
-# First Linux VM
+# Labo First Linux VM
 
 ## Installatie
 

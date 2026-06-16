@@ -1,4 +1,6 @@
-# Task scheduling
+# Labo Task Scheduling
+
+In dit labo gaan we aan de slag met het plannen van taken op een Linux-systeem. We bekijken hoe we commando's kunnen uitvoeren op een later tijdstip, zowel eenmalig als periodiek.
 
 ## Job control
 

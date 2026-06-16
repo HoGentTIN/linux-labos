@@ -1,5 +1,7 @@
 # Labo Advanced Text Processing
 
+In dit labo oefen je verschillende technieken voor geautomatiseerde tekstverwerking in. Je leert hoe je met globbing-patronen bestanden kan selecteren, hoe je met `awk` en `jq` data kan filteren en transformeren.
+
 ## Pattern Matching
 
 Voor de volgende oefeningen **moet** je *globbing* gebruiken. Elke poging om reguliere expressies te gebruiken (zoals pipen naar grep) is verboden!

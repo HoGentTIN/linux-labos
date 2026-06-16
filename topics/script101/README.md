@@ -1,4 +1,6 @@
-# Hst 2. script101 - Intro scripting
+# Labo Scripting 101
+
+In dit labo oefen je met I/O redirection en filtercommando's. Je leert ook hoe je shellvariabelen kan gebruiken en hoe je een Bash-script kan schrijven en uitvoeren.
 
 ## I/O Redirection en filters
 

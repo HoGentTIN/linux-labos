@@ -1,5 +1,7 @@
 # Labo Scripting 102
 
+In dit labo gaan we oefenen met conditionele statements, booleans en exit-status in Bash scripts. We beginnen met enkele aanwijzingen om je scripts robuuster te maken en fouten te voorkomen.
+
 ## Fouten opsporen/voorkomen
 
 Vanaf nu begin je elk script met de volgende drie lijnen:
