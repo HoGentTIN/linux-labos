@@ -40,17 +40,22 @@
     - Elke maandag en vrijdag van de zomervakantiemaanden, na de middag, telkens om het uur om 15 minuten na het uur (vb. 13:15, 14:15, enz.)
     - Telkens bij het opstarten van het systeem
 
-Controleer de werking door de systeemlogs te bekijken met `journalctl`. Je kan normaal de logboodschappen die jij hebt toegevoegd filteren met `journalctl -t GEBRUIKER` (GEBRUIKER vervangen door je eigen gebruikersnaam).
+    Controleer de werking door de systeemlogs te bekijken met `journalctl`. Je kan normaal de logboodschappen die jij hebt toegevoegd filteren met `journalctl -t GEBRUIKER` (GEBRUIKER vervangen door je eigen gebruikersnaam).
 
-Voorbeeld:
+    Voorbeeld:
 
-```console
-student@debian:~$ sudo journalctl -f -t student
-Jun 15 21:03:42 debian student[2883]: Test
-Jun 15 21:23:01 debian student[3037]: Free disk space: 55G
-Jun 15 21:24:01 debian student[3062]: Free disk space: 55G
-Jun 15 21:25:01 debian student[3077]: Free disk space: 55G
-Jun 15 21:26:01 debian student[3084]: Free disk space: 55G
-```
+    ```console
+    student@debian:~$ sudo journalctl -f -t student
+    Jun 15 21:03:42 debian student[2883]: Test
+    Jun 15 21:23:01 debian student[3037]: Free disk space: 55G
+    Jun 15 21:24:01 debian student[3062]: Free disk space: 55G
+    Jun 15 21:25:01 debian student[3077]: Free disk space: 55G
+    Jun 15 21:26:01 debian student[3084]: Free disk space: 55G
+    ```
 
-De eerste lijn van de output is een testboodschap die we handmatig hebben toegevoegd met `logger Test` om uit te proberen hoe het commando werkt. De volgende lijnen zijn de output van onze cronjob die we als test elke minuut de vrije schijfruimte lieten loggen om te controleren dat de cronjob correct werkt. Door de optie `-f` te gebruiken bij `journalctl` kunnen we meteen zien wanneer er nieuwe logboodschappen bijkomen.
+    De eerste lijn van de output is een testboodschap die we handmatig hebben toegevoegd met `logger Test` om uit te proberen hoe het commando werkt. De volgende lijnen zijn de output van onze cronjob die we als test elke minuut de vrije schijfruimte lieten loggen om te controleren dat de cronjob correct werkt. Door de optie `-f` te gebruiken bij `journalctl` kunnen we meteen zien wanneer er nieuwe logboodschappen bijkomen.
+
+4. Een cronjob wordt op de achtergrond uitgevoerd, dus je kan niet zien welke output (stdout of stderr) het proces genereert. Wat zou `cron` doen in zo'n geval? Test dit uit door een cronjob te maken die elke minuut het commando `echo "Cronjob output test"` uitvoert. Bekijk de systeemlogs om te zien waar deze output terecht zou komen.
+
+    - Op dit moment is het systeem eigenlijk niet geconfigureerd om de output van cronjobs op de "standaard manier" beschikbaar te maken. Zoek op hoe je dit kan aanpassen.
+    - Stel dat het niet mogelijk is om de nodige aanpassingen te doen om de output van cronjobs op de standaard manier beschikbaar te maken (bv omdat je niet voldoende rechten hebt op het systeem waarop je de cronjob wilt uitvoeren), hoe zou je er dan toch voor kunnen zorgen dat de output van een cronjob opgevangen wordt zodat je deze kunt bekijken?
