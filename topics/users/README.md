@@ -1,5 +1,7 @@
 # Labo Organising Users
 
+In dit labo oefen je met het beheren van gebruikers en groepen en het instellen van de juiste permissies op bestanden en directories.
+
 ## Gebruikers en groepen aanmaken
 
 Het doel van deze opgave is om de opdrachten en de begrippen met betrekking tot gebruikers en groepen te bestuderen, binnen de context van Linux als een multi-user-systeem.
