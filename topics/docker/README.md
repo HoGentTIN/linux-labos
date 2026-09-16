@@ -78,7 +78,7 @@ Most Linux distributions offer Docker images with a minimal installation that yo
 Launch an Alpine container **interactively** (`-i`) and open a shell (`-t`):
 
 ```console
-docker run -i -t --name alpine alpine
+$ docker run -i -t --name alpine alpine
 ```
 
 You will drop into a root shell inside the container. You can explore the contents. Which commands are available? Compare with the number of commands on the Linux Mint VM.
@@ -86,9 +86,9 @@ You will drop into a root shell inside the container. You can explore the conten
 Open another terminal and execute the following commands and peruse the output. What do these commands do, exactly?
 
 ```console
-docker container ls
-docker inspect alpine
-docker top alpine
+$ docker container ls
+$ docker inspect alpine
+$ docker top alpine
 ```
 
 Exit the shell in the Alpine container and repeat the previous commands. Is the container still running?
@@ -96,13 +96,13 @@ Exit the shell in the Alpine container and repeat the previous commands. Is the 
 Next, we will launch the container in the background (*detached*):
 
 ```console
-docker run -t -d --name alpine alpine
+$ docker run -t -d --name alpine alpine
 ```
 
 Docker complains that a container with that name already exists. In that case, you can use the command:
 
 ```console
-docker start alpine
+$ docker start alpine
 ```
 
 We didn't need to give the `-d` option in this case, it is started in the background automatically. Check whether the container is actually running!
@@ -110,9 +110,9 @@ We didn't need to give the `-d` option in this case, it is started in the backgr
 Since the container runs in detached mode, and doesn't have any running services, it isn't directly reachable. Try the following commands to execute a command inside the Alpine container and record the results:
 
 ```console
-docker exec -t alpine /bin/hostname
-docker exec -t alpine /sbin/ip a
-docker exec -i -t alpine /bin/sh
+$ docker exec -t alpine /bin/hostname
+$ docker exec -t alpine /sbin/ip a
+$ docker exec -i -t alpine /bin/sh
 ```
 
 - Compare the host name with the container ID
@@ -120,22 +120,22 @@ docker exec -i -t alpine /bin/sh
 - After you exit the shell, is the container still running? Check with `docker ps` and `docker ps -a`
 - Stop and remove the container when you're ready, we won't need it anymore.
 
-### Running a web application
+### Running a webserver in a container
 
 Run the following commands to download a Docker image and launch a container, and record the results. List the available Docker images and running containers afterwards. What's the container ID? What's the IP address of the container?
 
 ```console
-docker pull tutum/hello-world
-docker run -d -p 80 --name helloapp tutum/hello-world
+$ docker pull nginx
+$ docker run -d -p 8080:80 --name helloweb nginx
 ```
 
-The `docker run` command started a container named `helloapp` and exposed port 80. That basically means that the container runs a website and listens on port 80. Check that this is in fact the case using `curl http://IP_ADDRESS/` (with IP_ADDRESS the IP address of the `helloapp` container) and record the result.
+The `docker run` command started a container named `helloweb` and exposed port 80. That basically means that the container runs a website and listens on port 80. Check that this is in fact the case using `curl http://IP_ADDRESS/` (with IP_ADDRESS the IP address of the `helloweb` container) and record the result.
 
 Services that run inside containers can be made available to the outside world through port forwarding. Network traffic that arrives on the host system on that port, will be forwarded to port 80 of the container. Consequently, multiple containers may have port 80 exposed, but this will not result in a conflict on the host system, since they will be forwarded through a different port number.
 
-What's the forwarded port for the `helloapp` container? There's several ways to determine this, a.o. `docker ps` and `docker port ID` (with ID the container ID of the `helloapp` container). Check if this works with `curl http://localhost:PORT/` (with PORT the forwarded port). Record the results, and take a screenshot of the web page. You should get something like this:
+What's the forwarded port for the `helloweb` container? There's several ways to determine this, a.o. `docker ps` and `docker port ID` (with ID the container ID of the `helloweb` container). Check if this works with `curl http://localhost:PORT/` (with PORT the forwarded port). Record the results, and take a screenshot of the web page. You should get something like this:
 
-![The website served by the helloapp container](img/1-helloapp.png).
+![The website served by the helloweb container](img/1-helloweb.png).
 
 ## Persistent data
 
@@ -144,8 +144,8 @@ When you stop and remove a container, all data in that container is gone. Often,
 First, fetch the official MySQL Docker image from the registry. Then, create a Docker volume that will be used to store persistent data within the container:
 
 ```console
-docker volume create mysql-data
-docker volume inspect mysql-data
+$ docker volume create mysql-data
+$ docker volume inspect mysql-data
 ```
 
 The second command can be used to check where the volume contents are actually stored. What is the mount point of the volume?
@@ -155,7 +155,7 @@ The second command can be used to check where the volume contents are actually s
 Start the MySQL container with the following command:
 
 ```console
-docker run --name db -d \
+$ docker run --name db -d \
   -v mysql-data:/var/lib/mysql \
   -p 3306:3306 \
   -e MYSQL_DATABASE='appdb' \
@@ -312,14 +312,14 @@ Remark that in a container, we don't use the `systemctl start` command to start 
 Build the container image (don't forget the dot in the end, denoting the current directory!), and show a list of all images to check if it succeeded:
 
 ```console
-docker image build --tag local:static-site .
-docker image ls
+$ docker image build --tag local:static-site .
+$ docker image ls
 ```
 
 Now, start a container based on this image, forward port 8080 on the host system to port 80 of the container:
 
 ```console
-docker run -d -p 8080:80 --name nginx local:static-site
+$ docker run -d -p 8080:80 --name nginx local:static-site
 ```
 
 Now check if the website is available. You should be able to fetch the index page with `curl http://localhost:8080/` or by opening a webbrowser, pointing it to `http://127.0.0.1:8080/` and verifying that the web page is visible. It should contain a simple message ("Hello world/It works!").
@@ -341,7 +341,7 @@ Take a look at the Dockerfile from the previous part of the lab. It's based on t
 Tip: You can format JSON data with the command line tool jq. Pipe the output of the `docker inspect` command to `jq` without options or arguments for "pretty printed" output (coloured and indented). You can filter out only the relevant part of the output (about the layers) with:
 
 ```console
-docker image inspect alpine:latest | jq ".[]|.RootFS.Layers"
+$ docker image inspect alpine:latest | jq ".[]|.RootFS.Layers"
 ```
 
 Now inspect the layers of the `local:static-site` image. How many layers does this image have? Compare the SHA-256 checksum of the layers with the one from the `alpine:latest` image. You should see that the first layer is nothing more or less than the Alpine image! This image is reused to build our custom image. You can find the actual images of these layers in directory `/var/lib/docker/image/overlay2/layerdb/sha256`. Each layer has its own file, with the SHA-256 hash as name.
@@ -398,7 +398,7 @@ Create a `docker-compose.yml` file in the directory `labs/getting-started-app` a
 Stop the currently running instance of the application container and then run the command:
 
 ```console
-docker compose up -d
+$ docker compose up -d
 ```
 
 The `-d` option will run Docker Compose in the background so you can immediately use the terminal. If the application doesn't run after the first try, you can retry without the `-d` option. Error messages will be shown on the terminal. If you need a terminal for entering commands, log into the VM from another console.
@@ -410,8 +410,8 @@ Use portainer or the command line to inspect the containers. What are the names 
 Remark that we don't need to know the IP address in order to communicate between containers in the same stack. The container names, as specified in the Docker Compose file are configured as hostname aliases and will resolve to an IP-address inside the container. Verify this by opening a console (`/bin/sh`) inside the app container and try the following commands:
 
 ```console
-ping mysql
-getent ahosts mysql
+$ ping mysql
+$ getent ahosts mysql
 ```
 
 Note that the `getent ahosts` command can be used to test DNS name resolution on systems where the `dig` or `nslookup` commands are not available.
